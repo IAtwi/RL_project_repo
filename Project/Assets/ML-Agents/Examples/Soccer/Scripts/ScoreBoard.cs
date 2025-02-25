@@ -8,15 +8,20 @@ public class ScoreBoard : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _purpleScore;
     [SerializeField] private TextMeshProUGUI cinemaText;
 
+    private Color _blueColor = new(0, 33, 255);
+    private Color _purpleColor = new(228, 0, 255);
+
     #region Publics
 
     public void TeamScored(Team scoredTeam)
     {
+        if (_blueScore == null || _purpleScore == null) // no scoreboard
+            return;
         UpdateScore(scoredTeam, out string newScore);
 
-        //StartCoroutine(DisplayCinemaForSeconds(newScore, scoredTeam == Team.Purple ?
-        //    new Color(228, 0, 255) : new Color(0, 33, 255),
-        //    1f));
+        if (cinemaText != null)
+            StartCoroutine(DisplayCinemaForSeconds(newScore, scoredTeam, 1f));
+
         //StartCoroutine(SlowMotionEffect(1f, 0f));
     }
 
@@ -26,20 +31,16 @@ public class ScoreBoard : MonoBehaviour
 
     private void UpdateScore(Team scoredTeam, out string newScore)
     {
-        TextMeshProUGUI targetedScore;
-
-        if (scoredTeam == Team.Purple)
-            targetedScore = _blueScore;
-        else
-            targetedScore = _purpleScore;
-
+        TextMeshProUGUI targetedScore = scoredTeam == Team.Blue ? _blueScore : _purpleScore;
         newScore = (int.Parse(targetedScore.text) + 1).ToString();
         targetedScore.text = newScore;
     }
 
-    private IEnumerator DisplayCinemaForSeconds(string message, Color color, float duration)
+    private IEnumerator DisplayCinemaForSeconds(string message, Team scoredTeam, float duration)
     {
-        cinemaText.color = color;
+        Color scoredTeamColor = scoredTeam == Team.Blue ? _blueColor : _purpleColor;
+
+        cinemaText.color = scoredTeamColor;
         cinemaText.text = message;
         cinemaText.gameObject.SetActive(true);
 
@@ -48,12 +49,12 @@ public class ScoreBoard : MonoBehaviour
         cinemaText.gameObject.SetActive(false);
     }
 
-    private IEnumerator SlowMotionEffect(float duration, float slowFactor)
-    {
-        Time.timeScale = slowFactor;
-        yield return new WaitForSecondsRealtime(duration);
-        Time.timeScale = 1f;
-    }
+    //private IEnumerator SlowMotionEffect(float duration, float slowFactor)
+    //{
+    //    Time.timeScale = slowFactor;
+    //    yield return new WaitForSecondsRealtime(duration);
+    //    Time.timeScale = 1f;
+    //}
 
     #endregion
 }
