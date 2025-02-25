@@ -30,7 +30,7 @@ public class PushBlockWithInputPlayerController : MonoBehaviour, IInputActionAss
 
     void Awake()
     {
-        m_PushBlockSettings = FindObjectOfType<PushBlockWithInputSettings>();
+        m_PushBlockSettings = FindAnyObjectByType<PushBlockWithInputSettings>();
         LazyInitializeActions();
 
         // Cache the agent rigidbody
