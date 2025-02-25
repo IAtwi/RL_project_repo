@@ -38,8 +38,8 @@ public class SoccerEnvController : MonoBehaviour
     //List of Agents On Platform
     public List<PlayerInfo> AgentsList = new List<PlayerInfo>();
 
-    private SoccerSettings m_SoccerSettings;
-
+    //private SoccerSettings m_SoccerSettings;
+    ScoreBoard _scoreBoard;
 
     private SimpleMultiAgentGroup m_BlueAgentGroup;
     private SimpleMultiAgentGroup m_PurpleAgentGroup;
@@ -48,8 +48,8 @@ public class SoccerEnvController : MonoBehaviour
 
     void Start()
     {
-
-        m_SoccerSettings = FindAnyObjectByType<SoccerSettings>();
+        _scoreBoard = FindAnyObjectByType<ScoreBoard>();
+        //m_SoccerSettings = FindAnyObjectByType<SoccerSettings>();
         // Initialize TeamManager
         m_BlueAgentGroup = new SimpleMultiAgentGroup();
         m_PurpleAgentGroup = new SimpleMultiAgentGroup();
@@ -109,8 +109,8 @@ public class SoccerEnvController : MonoBehaviour
         }
         m_PurpleAgentGroup.EndGroupEpisode();
         m_BlueAgentGroup.EndGroupEpisode();
+        _scoreBoard.TeamScored(scoredTeam);
         ResetScene();
-
     }
 
 
