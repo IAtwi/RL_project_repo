@@ -22,7 +22,7 @@ public class ScoreBoard : MonoBehaviour
         if (cinemaText != null)
             StartCoroutine(DisplayCinemaForSeconds(newScore, scoredTeam, 1f));
 
-        //StartCoroutine(SlowMotionEffect(1f, 0f));
+        StartCoroutine(SlowMotionEffect(1f, 0f));
     }
 
     #endregion
@@ -38,9 +38,7 @@ public class ScoreBoard : MonoBehaviour
 
     private IEnumerator DisplayCinemaForSeconds(string message, Team scoredTeam, float duration)
     {
-        Color scoredTeamColor = scoredTeam == Team.Blue ? _blueColor : _purpleColor;
-
-        cinemaText.color = scoredTeamColor;
+        cinemaText.color = scoredTeam == Team.Blue ? _blueColor : _purpleColor;
         cinemaText.text = message;
         cinemaText.gameObject.SetActive(true);
 
@@ -49,12 +47,12 @@ public class ScoreBoard : MonoBehaviour
         cinemaText.gameObject.SetActive(false);
     }
 
-    //private IEnumerator SlowMotionEffect(float duration, float slowFactor)
-    //{
-    //    Time.timeScale = slowFactor;
-    //    yield return new WaitForSecondsRealtime(duration);
-    //    Time.timeScale = 1f;
-    //}
+    private IEnumerator SlowMotionEffect(float duration, float slowFactor)
+    {
+        Time.timeScale = slowFactor;
+        yield return new WaitForSecondsRealtime(duration);
+        Time.timeScale = 1f;
+    }
 
     #endregion
 }
