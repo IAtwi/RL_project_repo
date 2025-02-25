@@ -4,11 +4,19 @@
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
+/[Uu]ser[Ss]ettings/
 /Assets/AssetStoreTools*
 /Assets/Plugins*
 /Assets/Demonstrations*
 /Assets/ML-Agents/Timers*
 /csharp_timers.json
+
+# MemoryCaptures can get excessive in size.
+# They also could contain extremely sensitive data
+/[Mm]emoryCaptures/
+
+# Recordings can get excessive in size
+/[Rr]ecordings/
 
 # Environemnt logfile
 *Project.log
@@ -33,6 +41,8 @@
 
 # Unity3D generated meta files
 *.pidb.meta
+*.pdb.meta
+*.mdb.meta
 
 # Unity3D Generated File On Crash Reports
 /sysinfo.txt
@@ -68,3 +78,10 @@
 *.vscode/
 
 .DS_Store
+
+# Packed Addressables
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+
+# Temporary auto-generated Android Assets
+/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/[Aa]ssets/[Ss]treamingAssets/aa/*
