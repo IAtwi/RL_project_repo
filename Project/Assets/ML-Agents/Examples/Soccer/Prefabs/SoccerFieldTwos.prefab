@@ -4132,7 +4132,7 @@ MonoBehaviour:
   m_RaysPerDirection: 1
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
-  m_RayLength: 20
+  m_RayLength: 60
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -4832,7 +4832,7 @@ MonoBehaviour:
   m_RaysPerDirection: 1
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
-  m_RayLength: 20
+  m_RayLength: 60
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -5153,7 +5153,7 @@ MonoBehaviour:
   m_RaysPerDirection: 1
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
-  m_RayLength: 20
+  m_RayLength: 60
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -5770,7 +5770,7 @@ MonoBehaviour:
   m_RaysPerDirection: 1
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
-  m_RayLength: 20
+  m_RayLength: 60
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -5836,7 +5836,7 @@ MonoBehaviour:
   m_RaysPerDirection: 1
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
-  m_RayLength: 20
+  m_RayLength: 60
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -6528,7 +6528,7 @@ MonoBehaviour:
   m_RaysPerDirection: 1
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
-  m_RayLength: 20
+  m_RayLength: 60
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -7622,7 +7622,7 @@ MonoBehaviour:
   m_RaysPerDirection: 1
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
-  m_RayLength: 20
+  m_RayLength: 60
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -9002,7 +9002,7 @@ MonoBehaviour:
   m_RaysPerDirection: 1
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
-  m_RayLength: 20
+  m_RayLength: 60
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
