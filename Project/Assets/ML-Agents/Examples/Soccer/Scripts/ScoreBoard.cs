@@ -20,9 +20,9 @@ public class ScoreBoard : MonoBehaviour
         UpdateScore(scoredTeam, out string newScore);
 
         if (cinemaText != null)
-            StartCoroutine(DisplayCinemaForSeconds(newScore, scoredTeam, 1f));
+            StartCoroutine(DisplayCinemaForSeconds(newScore, scoredTeam, 0.5f));
 
-        StartCoroutine(SlowMotionEffect(1f, 0f));
+        //StartCoroutine(SlowMotionEffect(1f, 0f));
     }
 
     #endregion

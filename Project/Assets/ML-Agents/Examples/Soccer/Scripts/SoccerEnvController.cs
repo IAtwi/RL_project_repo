@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using Unity.MLAgents;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class SoccerEnvController : MonoBehaviour
 {
@@ -31,6 +34,7 @@ public class SoccerEnvController : MonoBehaviour
     /// </summary>
 
     public GameObject ball;
+    public bool UseScoreboard;
     [HideInInspector]
     public Rigidbody ballRb;
     Vector3 m_BallStartingPos;
@@ -38,7 +42,6 @@ public class SoccerEnvController : MonoBehaviour
     //List of Agents On Platform
     public List<PlayerInfo> AgentsList = new List<PlayerInfo>();
 
-    //private SoccerSettings m_SoccerSettings;
     ScoreBoard _scoreBoard;
 
     private SimpleMultiAgentGroup m_BlueAgentGroup;
@@ -46,10 +49,12 @@ public class SoccerEnvController : MonoBehaviour
 
     private int m_ResetTimer;
 
+    private static int _UseScoreboardCount = 0;
+    private static readonly object lockObject = new(); // Lock for thread safety
+
     void Start()
     {
-        _scoreBoard = FindAnyObjectByType<ScoreBoard>();
-        //m_SoccerSettings = FindAnyObjectByType<SoccerSettings>();
+        IsUseScoreboard();
         // Initialize TeamManager
         m_BlueAgentGroup = new SimpleMultiAgentGroup();
         m_PurpleAgentGroup = new SimpleMultiAgentGroup();
@@ -72,6 +77,31 @@ public class SoccerEnvController : MonoBehaviour
         ResetScene();
     }
 
+    private void IsUseScoreboard()
+    {
+        if (!UseScoreboard)
+            return;
+        ValidateUseScoreboardCount();
+
+        _scoreBoard = FindAnyObjectByType<ScoreBoard>();
+        if (_scoreBoard == null)
+            Debug.LogError("Couldn't find object of type ScoreBoard.");
+    }
+
+    private void ValidateUseScoreboardCount()
+    {
+        lock (lockObject) // Prevent multiple threads from modifying at the same time
+        {
+            _UseScoreboardCount += 1; // Increment the shared field
+
+            if (_UseScoreboardCount > 1)
+            {
+                Debug.LogError("More than one Soccer Environment Controller are using the Scoreboard.! Stopping the game.");
+                StopGame();
+            }
+        }
+    }
+
     void FixedUpdate()
     {
         m_ResetTimer += 1;
@@ -83,6 +113,16 @@ public class SoccerEnvController : MonoBehaviour
         }
     }
 
+    void StopGame()
+    {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false; // Stop play mode in the editor
+#else
+        Application.Quit(); // Quit the application in a build
+#endif
+    }
+
+    #region Publics
 
     public void ResetBall()
     {
@@ -109,10 +149,10 @@ public class SoccerEnvController : MonoBehaviour
         }
         m_PurpleAgentGroup.EndGroupEpisode();
         m_BlueAgentGroup.EndGroupEpisode();
-        _scoreBoard.TeamScored(scoredTeam);
+        if (_scoreBoard != null)
+            _scoreBoard.TeamScored(scoredTeam);
         ResetScene();
     }
-
 
     public void ResetScene()
     {
@@ -134,4 +174,6 @@ public class SoccerEnvController : MonoBehaviour
         //Reset Ball
         ResetBall();
     }
+
+    #endregion
 }
