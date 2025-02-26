@@ -34,27 +34,21 @@ public class SoccerEnvController : MonoBehaviour
     /// </summary>
 
     public GameObject ball;
-    public bool UseScoreboard;
     [HideInInspector]
     public Rigidbody ballRb;
-    Vector3 m_BallStartingPos;
+    private Vector3 m_BallStartingPos;
+    [SerializeField] private ScoreBoard _scoreBoard;
 
     //List of Agents On Platform
     public List<PlayerInfo> AgentsList = new List<PlayerInfo>();
-
-    ScoreBoard _scoreBoard;
 
     private SimpleMultiAgentGroup m_BlueAgentGroup;
     private SimpleMultiAgentGroup m_PurpleAgentGroup;
 
     private int m_ResetTimer;
 
-    private static int _UseScoreboardCount = 0;
-    private static readonly object lockObject = new(); // Lock for thread safety
-
-    void Start()
+    private void Start()
     {
-        IsUseScoreboard();
         // Initialize TeamManager
         m_BlueAgentGroup = new SimpleMultiAgentGroup();
         m_PurpleAgentGroup = new SimpleMultiAgentGroup();
@@ -74,35 +68,11 @@ public class SoccerEnvController : MonoBehaviour
                 m_PurpleAgentGroup.RegisterAgent(item.Agent);
             }
         }
+        _scoreBoard.ResetScores();
         ResetScene();
     }
 
-    private void IsUseScoreboard()
-    {
-        if (!UseScoreboard)
-            return;
-        ValidateUseScoreboardCount();
-
-        _scoreBoard = FindAnyObjectByType<ScoreBoard>();
-        if (_scoreBoard == null)
-            Debug.LogError("Couldn't find object of type ScoreBoard.");
-    }
-
-    private void ValidateUseScoreboardCount()
-    {
-        lock (lockObject) // Prevent multiple threads from modifying at the same time
-        {
-            _UseScoreboardCount += 1; // Increment the shared field
-
-            if (_UseScoreboardCount > 1)
-            {
-                Debug.LogError("More than one Soccer Environment Controller are using the Scoreboard.! Stopping the game.");
-                StopGame();
-            }
-        }
-    }
-
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         m_ResetTimer += 1;
         if (m_ResetTimer >= MaxEnvironmentSteps && MaxEnvironmentSteps > 0)
@@ -111,15 +81,6 @@ public class SoccerEnvController : MonoBehaviour
             m_PurpleAgentGroup.GroupEpisodeInterrupted();
             ResetScene();
         }
-    }
-
-    void StopGame()
-    {
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false; // Stop play mode in the editor
-#else
-        Application.Quit(); // Quit the application in a build
-#endif
     }
 
     #region Publics
@@ -149,8 +110,7 @@ public class SoccerEnvController : MonoBehaviour
         }
         m_PurpleAgentGroup.EndGroupEpisode();
         m_BlueAgentGroup.EndGroupEpisode();
-        if (_scoreBoard != null)
-            _scoreBoard.TeamScored(scoredTeam);
+        _scoreBoard.TeamScored(scoredTeam);
         ResetScene();
     }
 
