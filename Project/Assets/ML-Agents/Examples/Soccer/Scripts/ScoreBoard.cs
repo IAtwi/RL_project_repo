@@ -8,8 +8,8 @@ public class ScoreBoard : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _purpleScore;
     [SerializeField] private TextMeshProUGUI cinemaText;
 
-    private Color _blueColor = new(0, 33, 255);
-    private Color _purpleColor = new(228, 0, 255);
+    private Color _blueColor = new(32 / 255f, 147 / 255f, 237 / 255f);
+    private Color _purpleColor = new(139 / 255f, 107 / 255f, 195 / 255f);
 
     #region Publics
 
