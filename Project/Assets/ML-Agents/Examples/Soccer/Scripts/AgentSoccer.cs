@@ -1,7 +1,7 @@
-using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Policies;
+using UnityEngine;
 
 public enum Team
 {
@@ -28,25 +28,26 @@ public class AgentSoccer : Agent
 
     [HideInInspector]
     public Team team;
-    float m_KickPower;
+    private float m_KickPower;
+    private readonly float _rotationSpeed = 1.4f;
     // The coefficient for the reward for colliding with a ball. Set using curriculum.
-    float m_BallTouch;
+    private float m_BallTouch;
     public Position position;
 
-    const float k_Power = 2000f;
-    float m_Existential;
-    float m_LateralSpeed;
-    float m_ForwardSpeed;
+    private const float k_Power = 2000f;
+    private float m_Existential;
+    private float m_LateralSpeed;
+    private float m_ForwardSpeed;
 
 
     [HideInInspector]
     public Rigidbody agentRb;
-    SoccerSettings m_SoccerSettings;
-    BehaviorParameters m_BehaviorParameters;
+    private SoccerSettings m_SoccerSettings;
+    private BehaviorParameters m_BehaviorParameters;
     public Vector3 initialPos;
     public float rotSign;
 
-    EnvironmentParameters m_ResetParams;
+    private EnvironmentParameters m_ResetParams;
 
     public override void Initialize()
     {
@@ -73,21 +74,18 @@ public class AgentSoccer : Agent
             initialPos = new Vector3(transform.position.x + 5f, .5f, transform.position.z);
             rotSign = -1f;
         }
+
+        m_LateralSpeed = 0.5f;
+        m_ForwardSpeed = 0.8f;
         if (position == Position.Goalie)
         {
-            m_LateralSpeed = 1.0f;
-            m_ForwardSpeed = 1.0f;
+            m_LateralSpeed = 0.8f;
         }
         else if (position == Position.Striker)
         {
-            m_LateralSpeed = 0.3f;
-            m_ForwardSpeed = 1.3f;
+            m_ForwardSpeed = 1.1f;
         }
-        else
-        {
-            m_LateralSpeed = 0.3f;
-            m_ForwardSpeed = 1.0f;
-        }
+
         m_SoccerSettings = FindAnyObjectByType<SoccerSettings>();
         agentRb = GetComponent<Rigidbody>();
         agentRb.maxAngularVelocity = 500;
@@ -137,15 +135,13 @@ public class AgentSoccer : Agent
                 break;
         }
 
-        transform.Rotate(rotateDir, Time.deltaTime * 100f);
+        transform.Rotate(rotateDir, Time.deltaTime * 100f * _rotationSpeed);
         agentRb.AddForce(dirToGo * m_SoccerSettings.agentRunSpeed,
             ForceMode.VelocityChange);
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
-
     {
-
         if (position == Position.Goalie)
         {
             // Existential bonus for Goalies.
@@ -193,7 +189,7 @@ public class AgentSoccer : Agent
     /// <summary>
     /// Used to provide a "kick" to the ball.
     /// </summary>
-    void OnCollisionEnter(Collision c)
+    private void OnCollisionEnter(Collision c)
     {
         var force = k_Power * m_KickPower;
         if (position == Position.Goalie)
