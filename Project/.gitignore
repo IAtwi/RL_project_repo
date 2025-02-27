@@ -58,6 +58,9 @@
 # Plugins
 /Assets/VideoRecorder*
 
+# Large Checkpoints Files from results in Soccer Example
+Assets/ML-Agents/Examples/Soccer/results/**/SoccerTwos
+
 # Mac hidden files
 *.DS_Store
 */.ipynb_checkpoints
