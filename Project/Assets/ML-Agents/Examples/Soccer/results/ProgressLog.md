@@ -13,6 +13,7 @@ Run IDs are used as the heading for the logs
 
 ### FirstSeriousRun
 
+- **Title**: SoccerFours0.1
 - **Date**: 2025-02-27
 - **Description**: First serious run with 8 agents in the environment. The model is trained with the same configuration as the previous run. Rewards for blocking shots and staying in formation have been disabled.
 - **Steps**: 1.2M
