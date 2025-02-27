@@ -47,12 +47,15 @@ public class AgentSoccer : Agent
     private BehaviorParameters m_BehaviorParameters;
     public Vector3 initialPos;
     public float rotSign;
+    private Vector3 previousBallPosition;
+    private SoccerEnvController envController;
 
     private EnvironmentParameters m_ResetParams;
 
     public override void Initialize()
     {
-        SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
+        envController = GetComponentInParent<SoccerEnvController>();
+        previousBallPosition = envController.ball.transform.position;  // Initialize ball position
         if (envController != null)
         {
             m_Existential = 1f / envController.MaxEnvironmentSteps;
@@ -174,7 +177,17 @@ public class AgentSoccer : Agent
             // Existential penalty for Strikers
             AddReward(-m_Existential);
         }
+
         MoveAgent(actionBuffers.DiscreteActions);
+
+        // Reward passing to teammates
+        if (HasPassedToTeammate())
+        {
+            AddReward(0.2f);  // Small reward for successful pass
+        }
+
+        // Save the current ball position for next step
+        previousBallPosition = envController.ball.transform.position;
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -269,5 +282,30 @@ public class AgentSoccer : Agent
     //        }
     //    }
     //}
+
+    private bool HasPassedToTeammate()
+    {
+        var teamGroup = team == Team.Blue ? envController.m_BlueAgentGroup : envController.m_PurpleAgentGroup;
+
+        foreach (var teammate in teamGroup.GetRegisteredAgents())
+        {
+            if (teammate != this)
+            {
+                float distanceBefore = Vector3.Distance(previousBallPosition, teammate.transform.position);
+                float distanceAfter = Vector3.Distance(envController.ball.transform.position, teammate.transform.position);
+
+                // If ball got closer to a teammate, it's a pass
+                if (distanceAfter < distanceBefore)
+                {
+                    //Debug.Log((distanceBefore - distanceAfter) + " Passing reward: True");
+                    return true;
+                } else
+                {
+                    //Debug.Log((distanceBefore - distanceAfter) + " Passing reward: False");
+                }
+            }
+        }
+        return false;
+    }
 
 }
