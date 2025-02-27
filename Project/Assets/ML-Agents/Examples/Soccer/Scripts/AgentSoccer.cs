@@ -387,7 +387,7 @@ public class AgentSoccer : Agent
         //    //Debug.Log(this.team.ToString() + this.role.ToString() + distance + " Formation reward: False");
         //    return false;
         //}
-        return false
+        return false;
     }
 
     private bool IsBlockingShot()
