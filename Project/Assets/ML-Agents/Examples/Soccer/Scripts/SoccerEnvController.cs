@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.MLAgents;
 using UnityEngine;
 using static AgentSoccer;
@@ -28,7 +26,7 @@ public class SoccerEnvController : MonoBehaviour
     public SimpleMultiAgentGroup m_BlueAgentGroup;
     public SimpleMultiAgentGroup m_PurpleAgentGroup;
 
-    private SoccerSettings m_SoccerSettings;
+    private FieldController _fieldController;
     private int m_ResetTimer;
     private Rigidbody ballRb;
     private Vector3 m_BallStartingPos;
@@ -81,7 +79,7 @@ public class SoccerEnvController : MonoBehaviour
         m_PurpleAgentGroup.EndGroupEpisode();
         m_BlueAgentGroup.EndGroupEpisode();
         _scoreBoard.TeamScored(scoredTeam);
-        StartCoroutine(ColorizeFieldWalls(scoredTeam, 0.6f));
+        StartCoroutine(_fieldController.ColorizeFieldWalls(scoredTeam, 0.6f));
         ResetScene();
     }
 
@@ -112,7 +110,7 @@ public class SoccerEnvController : MonoBehaviour
 
     private void Start()
     {
-        m_SoccerSettings = FindAnyObjectByType<SoccerSettings>();
+        _fieldController = GetComponentInChildren<FieldController>();
         // Initialize TeamManager
         m_BlueAgentGroup = new SimpleMultiAgentGroup();
         m_PurpleAgentGroup = new SimpleMultiAgentGroup();
@@ -144,23 +142,6 @@ public class SoccerEnvController : MonoBehaviour
             m_BlueAgentGroup.GroupEpisodeInterrupted();
             m_PurpleAgentGroup.GroupEpisodeInterrupted();
             ResetScene();
-        }
-    }
-
-    private IEnumerator ColorizeFieldWalls(Team scoredTeam, float duration)
-    {
-        Material[] initialMaterials = _wallMeshRenderers.Select(it => it.material).ToArray();
-        Material targetedMaterial = scoredTeam == Team.Blue ? m_SoccerSettings.blueMaterial : m_SoccerSettings.purpleMaterial;
-
-        foreach (MeshRenderer meshRenderer in _wallMeshRenderers)
-            meshRenderer.material = targetedMaterial;
-
-        yield return new WaitForSeconds(duration);
-
-        for (int i = 0; i < _wallMeshRenderers.Count; i++)
-        {
-            MeshRenderer meshRenderer = _wallMeshRenderers[i];
-            meshRenderer.material = initialMaterials[i];
         }
     }
 
