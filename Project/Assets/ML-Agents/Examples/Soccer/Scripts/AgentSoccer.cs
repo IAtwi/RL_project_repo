@@ -1,7 +1,7 @@
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Policies;
-using Unity.MLAgents.Sensors;
+//using Unity.MLAgents.Sensors;
 using UnityEngine;
 
 public enum Team
@@ -56,9 +56,25 @@ public class AgentSoccer : Agent
         if (envController != null)
         {
             m_Existential = 1f / envController.MaxEnvironmentSteps;
+
+            if (envController.ball == null)
+            {
+                Debug.LogError("SoccerEnvController: ball is not set.");
+            }
+
+            //if (envController.m_BlueAgentGroup == null)
+            //{
+            //    Debug.LogError("SoccerEnvController: m_BlueAgentGroup is not set.");
+            //}
+
+            //if (envController.m_PurpleAgentGroup == null)
+            //{
+            //    Debug.LogError("SoccerEnvController: m_PurpleAgentGroup is not set.");
+            //}
         }
         else
         {
+            Debug.LogError("SoccerEnvController is not found in parent.");
             m_Existential = 1f / MaxStep;
         }
 
@@ -88,6 +104,11 @@ public class AgentSoccer : Agent
         }
 
         m_SoccerSettings = FindAnyObjectByType<SoccerSettings>();
+        if (m_SoccerSettings == null)
+        {
+            Debug.LogError("SoccerSettings is not found.");
+        }
+
         agentRb = GetComponent<Rigidbody>();
         agentRb.maxAngularVelocity = 500;
 
@@ -211,30 +232,42 @@ public class AgentSoccer : Agent
         m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
     }
 
-    public override void CollectObservations(VectorSensor sensor)
-    {
-        // Local awareness (via RayPerception)
-        // The RayPerceptionSensor should already add observations automatically
+    //public override void CollectObservations(VectorSensor sensor)
+    //{
+    //    // Local awareness (via RayPerception)
+    //    // The RayPerceptionSensor should already add observations automatically
 
-        // Add agent's own position
-        sensor.AddObservation(transform.position.x);
-        sensor.AddObservation(transform.position.z);
+    //    // Add agent's own position
+    //    sensor.AddObservation(transform.position.x);
+    //    sensor.AddObservation(transform.position.z);
 
-        // Add ball position (global info)
-        SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
-        sensor.AddObservation(envController.ball.transform.position.x);
-        sensor.AddObservation(envController.ball.transform.position.z);
+    //    // Add ball position (global info)
+    //    SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
+    //    if (envController != null && envController.ball != null)
+    //    {
+    //        sensor.AddObservation(envController.ball.transform.position.x);
+    //        sensor.AddObservation(envController.ball.transform.position.z);
+    //    }
+    //    else
+    //    {
+    //        // Add default values if envController or ball is null
+    //        sensor.AddObservation(0f);
+    //        sensor.AddObservation(0f);
+    //    }
 
-        // Add teammate positions (shared observation)
-        var agentGroup = team == Team.Blue ? envController.m_BlueAgentGroup.GetRegisteredAgents() : envController.m_PurpleAgentGroup.GetRegisteredAgents();
-        foreach (var agent in agentGroup)
-        {
-            if (agent != this)  // Exclude self
-            {
-                sensor.AddObservation(agent.transform.position.x);
-                sensor.AddObservation(agent.transform.position.z);
-            }
-        }
-    }
+    //    // Add teammate positions (shared observation)
+    //    var agentGroup = team == Team.Blue ? envController?.m_BlueAgentGroup?.GetRegisteredAgents() : envController?.m_PurpleAgentGroup?.GetRegisteredAgents();
+    //    if (agentGroup != null)
+    //    {
+    //        foreach (var agent in agentGroup)
+    //        {
+    //            if (agent != this)  // Exclude self
+    //            {
+    //                sensor.AddObservation(agent.transform.position.x);
+    //                sensor.AddObservation(agent.transform.position.z);
+    //            }
+    //        }
+    //    }
+    //}
 
 }
