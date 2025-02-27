@@ -2736,8 +2736,6 @@ MonoBehaviour:
   MaxEnvironmentSteps: 5000
   ball: {fileID: 1682753582128710}
   _scoreBoard: {fileID: 4208793123988112434}
-  _blueMaterial: {fileID: 2100000, guid: c9fa44c2c3f8ce74ca39a3355ea42631, type: 2}
-  _purpleMaterial: {fileID: 2100000, guid: b0da1813c36914e678ba57f2790424e1, type: 2}
   _wallMeshRenderers:
   - {fileID: 901290779}
   - {fileID: 2091312084}

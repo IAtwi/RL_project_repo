@@ -22,14 +22,13 @@ public class SoccerEnvController : MonoBehaviour
     [Tooltip("Max Environment Steps")] public int MaxEnvironmentSteps = 5000; // Max Academy steps before this platform resets
     public GameObject ball;
     [SerializeField] private ScoreBoard _scoreBoard;
-    [SerializeField] private Material _blueMaterial;
-    [SerializeField] private Material _purpleMaterial;
     [SerializeField] private List<MeshRenderer> _wallMeshRenderers;
     [SerializeField] private List<PlayerInfo> AgentsList = new(); //List of Agents On Platform
 
     public SimpleMultiAgentGroup m_BlueAgentGroup;
     public SimpleMultiAgentGroup m_PurpleAgentGroup;
 
+    private SoccerSettings m_SoccerSettings;
     private int m_ResetTimer;
     private Rigidbody ballRb;
     private Vector3 m_BallStartingPos;
@@ -113,6 +112,7 @@ public class SoccerEnvController : MonoBehaviour
 
     private void Start()
     {
+        m_SoccerSettings = FindAnyObjectByType<SoccerSettings>();
         // Initialize TeamManager
         m_BlueAgentGroup = new SimpleMultiAgentGroup();
         m_PurpleAgentGroup = new SimpleMultiAgentGroup();
@@ -150,7 +150,7 @@ public class SoccerEnvController : MonoBehaviour
     private IEnumerator ColorizeFieldWalls(Team scoredTeam, float duration)
     {
         Material[] initialMaterials = _wallMeshRenderers.Select(it => it.material).ToArray();
-        Material targetedMaterial = scoredTeam == Team.Blue ? _blueMaterial : _purpleMaterial;
+        Material targetedMaterial = scoredTeam == Team.Blue ? m_SoccerSettings.blueMaterial : m_SoccerSettings.purpleMaterial;
 
         foreach (MeshRenderer meshRenderer in _wallMeshRenderers)
             meshRenderer.material = targetedMaterial;

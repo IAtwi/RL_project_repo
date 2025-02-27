@@ -40,7 +40,7 @@ public class AgentSoccer : Agent
     [HideInInspector]
     public Team team;
     private float m_KickPower;
-    private readonly float _rotationSpeed = 1.4f;
+    private readonly float _rotationSpeed = 1.25f;
     // The coefficient for the reward for colliding with a ball. Set using curriculum.
     private float m_BallTouch;
     public Position position;
@@ -118,14 +118,14 @@ public class AgentSoccer : Agent
         }
 
         m_LateralSpeed = 0.5f;
-        m_ForwardSpeed = 0.8f;
+        m_ForwardSpeed = 0.7f;
         if (position == Position.Goalie)
         {
             m_LateralSpeed = 0.8f;
         }
         else if (position == Position.Striker)
         {
-            m_ForwardSpeed = 1.1f;
+            m_ForwardSpeed = 1f;
         }
 
         m_SoccerSettings = FindAnyObjectByType<SoccerSettings>();
