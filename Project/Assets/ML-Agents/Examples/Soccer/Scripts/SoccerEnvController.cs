@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.MLAgents;
 using UnityEngine;
+using static AgentSoccer;
 
 public class SoccerEnvController : MonoBehaviour
 {
@@ -45,6 +46,26 @@ public class SoccerEnvController : MonoBehaviour
     //private SimpleMultiAgentGroup m_PurpleAgentGroup;
 
     private int m_ResetTimer;
+
+    // This function returns the target position for the agent based on its role
+    // I put approximate values based on the field size in the prefab
+    public Vector3 GetTargetFormationPosition(AgentSoccer agent)
+    {
+        if (agent.team == Team.Blue)
+        {
+            if (agent.role == PlayerRole.Defender) return new Vector3(-13, 0, 0);
+            if (agent.role == PlayerRole.Midfielder) return new Vector3(-0f, 0, 0);
+            if (agent.role == PlayerRole.Striker) return new Vector3(13f, 0, 0);
+        }
+        else // Purple  Team
+        {
+            if (agent.role == PlayerRole.Defender) return new Vector3(13f, 0, 0);
+            if (agent.role == PlayerRole.Midfielder) return new Vector3(0f, 0, 0);
+            if (agent.role == PlayerRole.Striker) return new Vector3(-13f, 0, 0);
+        }
+        return Vector3.zero; // Default fallback
+    }
+
 
     private void Start()
     {

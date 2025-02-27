@@ -26,6 +26,15 @@ public class AgentSoccer : Agent
         Goalie,
         Generic
     }
+    // Intentionally added it as PlayerRole to avoid conflict with the Position-related functions
+    public enum PlayerRole {
+        Defender,
+        Midfielder,
+        Striker
+    }
+
+    [SerializeField]
+    public PlayerRole role;
 
     [HideInInspector]
     public Team team;
@@ -93,6 +102,18 @@ public class AgentSoccer : Agent
             team = Team.Purple;
             initialPos = new Vector3(transform.position.x + 5f, .5f, transform.position.z);
             rotSign = -1f;
+        }
+
+        // Assign role (we _should_ be able to manually set the role in Unity too)
+        // For now settled on assigning roles based on the agent's name
+        // For now it's only detecting purple defenders and blue strikers which is...
+        // most likely a mistake on my end, specifically in how i defined the values
+        // of the target positions in SoccerEnvController.cs
+        if (team == Team.Blue)
+        {
+            if (name.Contains("Defender")) role = PlayerRole.Defender;
+            else if (name.Contains("Midfielder")) role = PlayerRole.Midfielder;
+            else role = PlayerRole.Striker;
         }
 
         m_LateralSpeed = 0.5f;
@@ -188,6 +209,12 @@ public class AgentSoccer : Agent
 
         // Encourage spreading out
         if (IsProperlySpaced())
+        {
+            AddReward(0.1f);
+        }
+
+        // Reward for maintaining formation
+        if (IsInFormation())
         {
             AddReward(0.1f);
         }
@@ -336,5 +363,23 @@ public class AgentSoccer : Agent
             }
         }
         return true;
+    }
+
+    private bool IsInFormation()
+    {
+        float toleranceDistance = 2.0f; // How close to the target position/formation is close enough
+        Vector3 targetPos = envController.GetTargetFormationPosition(this);
+        float distance = Vector3.Distance(transform.position, targetPos);
+
+        if (distance < toleranceDistance)
+        {
+            Debug.Log(this.team.ToString() + this.role.ToString() + distance + " Formation reward: True");
+            return true;
+        }
+        else
+        {
+            //Debug.Log(this.team.ToString() + this.role.ToString() + distance + " Formation reward: False");
+            return false;
+        }
     }
 }
