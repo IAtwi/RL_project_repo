@@ -186,6 +186,12 @@ public class AgentSoccer : Agent
             AddReward(0.2f);  // Small reward for successful pass
         }
 
+        // Encourage spreading out
+        if (IsProperlySpaced())
+        {
+            AddReward(0.1f);
+        }
+
         // Save the current ball position for next step
         previousBallPosition = envController.ball.transform.position;
     }
@@ -308,4 +314,27 @@ public class AgentSoccer : Agent
         return false;
     }
 
+    private bool IsProperlySpaced()
+    {
+        float minDistance = 2.0f; // Minimum distance between teammates
+
+        var teamGroup = team == Team.Blue ? envController.m_BlueAgentGroup : envController.m_PurpleAgentGroup;
+        foreach (var teammate in teamGroup.GetRegisteredAgents())
+        {
+            if (teammate != this)
+            {
+                float distance = Vector3.Distance(transform.position, teammate.transform.position);
+                if (distance < minDistance)
+                {
+                    //Debug.Log(distance + " Spacing reward: False");
+                    return false;
+                }
+                else
+                {
+                    //Debug.Log(distance + " Spacing reward: True");
+                }
+            }
+        }
+        return true;
+    }
 }
