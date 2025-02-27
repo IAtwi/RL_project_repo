@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.MLAgents;
 using UnityEngine;
 using static AgentSoccer;
@@ -17,35 +19,23 @@ public class SoccerEnvController : MonoBehaviour
         public Rigidbody Rb;
     }
 
-
-    /// <summary>
-    /// Max Academy steps before this platform resets
-    /// </summary>
-    [Tooltip("Max Environment Steps")] public int MaxEnvironmentSteps = 25000;
-
-    /// <summary>
-    /// The area bounds.
-    /// </summary>
-
-    /// <summary>
-    /// We will be changing the ground material based on success/failue
-    /// </summary>
-
+    [Tooltip("Max Environment Steps")] public int MaxEnvironmentSteps = 5000; // Max Academy steps before this platform resets
     public GameObject ball;
-    [HideInInspector]
-    public Rigidbody ballRb;
-    private Vector3 m_BallStartingPos;
     [SerializeField] private ScoreBoard _scoreBoard;
-
-    //List of Agents On Platform
-    public List<PlayerInfo> AgentsList = new List<PlayerInfo>();
+    [SerializeField] private Material _blueMaterial;
+    [SerializeField] private Material _purpleMaterial;
+    [SerializeField] private List<MeshRenderer> _wallMeshRenderers;
+    [SerializeField] private List<PlayerInfo> AgentsList = new(); //List of Agents On Platform
 
     public SimpleMultiAgentGroup m_BlueAgentGroup;
-    //private SimpleMultiAgentGroup m_BlueAgentGroup;
     public SimpleMultiAgentGroup m_PurpleAgentGroup;
-    //private SimpleMultiAgentGroup m_PurpleAgentGroup;
 
     private int m_ResetTimer;
+    private Rigidbody ballRb;
+    private Vector3 m_BallStartingPos;
+
+
+    #region Publics
 
     // This function returns the target position for the agent based on its role
     // I put approximate values based on the field size in the prefab
@@ -66,6 +56,60 @@ public class SoccerEnvController : MonoBehaviour
         return Vector3.zero; // Default fallback
     }
 
+    public void ResetBall()
+    {
+        var randomPosX = Random.Range(-2.5f, 2.5f);
+        var randomPosZ = Random.Range(-2.5f, 2.5f);
+
+        ball.transform.position = m_BallStartingPos + new Vector3(randomPosX, 0f, randomPosZ);
+        ballRb.linearVelocity = Vector3.zero;
+        ballRb.angularVelocity = Vector3.zero;
+
+    }
+
+    public void GoalTouched(Team scoredTeam)
+    {
+        if (scoredTeam == Team.Blue)
+        {
+            m_BlueAgentGroup.AddGroupReward(1 - (float)m_ResetTimer / MaxEnvironmentSteps);
+            m_PurpleAgentGroup.AddGroupReward(-1);
+        }
+        else
+        {
+            m_PurpleAgentGroup.AddGroupReward(1 - (float)m_ResetTimer / MaxEnvironmentSteps);
+            m_BlueAgentGroup.AddGroupReward(-1);
+        }
+        m_PurpleAgentGroup.EndGroupEpisode();
+        m_BlueAgentGroup.EndGroupEpisode();
+        _scoreBoard.TeamScored(scoredTeam);
+        StartCoroutine(ColorizeFieldWalls(scoredTeam, 0.6f));
+        ResetScene();
+    }
+
+    public void ResetScene()
+    {
+        m_ResetTimer = 0;
+
+        //Reset Agents
+        foreach (var item in AgentsList)
+        {
+            var randomPosX = Random.Range(-5f, 5f);
+            var newStartPos = item.Agent.initialPos + new Vector3(randomPosX, 0f, 0f);
+            var rot = item.Agent.rotSign * Random.Range(80.0f, 100.0f);
+            var newRot = Quaternion.Euler(0, rot, 0);
+            item.Agent.transform.SetPositionAndRotation(newStartPos, newRot);
+
+            item.Rb.linearVelocity = Vector3.zero;
+            item.Rb.angularVelocity = Vector3.zero;
+        }
+
+        ResetBall();
+    }
+
+    #endregion
+
+
+    #region Privates
 
     private void Start()
     {
@@ -103,56 +147,21 @@ public class SoccerEnvController : MonoBehaviour
         }
     }
 
-    #region Publics
-
-    public void ResetBall()
+    private IEnumerator ColorizeFieldWalls(Team scoredTeam, float duration)
     {
-        var randomPosX = Random.Range(-2.5f, 2.5f);
-        var randomPosZ = Random.Range(-2.5f, 2.5f);
+        Material[] initialMaterials = _wallMeshRenderers.Select(it => it.material).ToArray();
+        Material targetedMaterial = scoredTeam == Team.Blue ? _blueMaterial : _purpleMaterial;
 
-        ball.transform.position = m_BallStartingPos + new Vector3(randomPosX, 0f, randomPosZ);
-        ballRb.linearVelocity = Vector3.zero;
-        ballRb.angularVelocity = Vector3.zero;
+        foreach (MeshRenderer meshRenderer in _wallMeshRenderers)
+            meshRenderer.material = targetedMaterial;
 
-    }
+        yield return new WaitForSeconds(duration);
 
-    public void GoalTouched(Team scoredTeam)
-    {
-        if (scoredTeam == Team.Blue)
+        for (int i = 0; i < _wallMeshRenderers.Count; i++)
         {
-            m_BlueAgentGroup.AddGroupReward(1 - (float)m_ResetTimer / MaxEnvironmentSteps);
-            m_PurpleAgentGroup.AddGroupReward(-1);
+            MeshRenderer meshRenderer = _wallMeshRenderers[i];
+            meshRenderer.material = initialMaterials[i];
         }
-        else
-        {
-            m_PurpleAgentGroup.AddGroupReward(1 - (float)m_ResetTimer / MaxEnvironmentSteps);
-            m_BlueAgentGroup.AddGroupReward(-1);
-        }
-        m_PurpleAgentGroup.EndGroupEpisode();
-        m_BlueAgentGroup.EndGroupEpisode();
-        _scoreBoard.TeamScored(scoredTeam);
-        ResetScene();
-    }
-
-    public void ResetScene()
-    {
-        m_ResetTimer = 0;
-
-        //Reset Agents
-        foreach (var item in AgentsList)
-        {
-            var randomPosX = Random.Range(-5f, 5f);
-            var newStartPos = item.Agent.initialPos + new Vector3(randomPosX, 0f, 0f);
-            var rot = item.Agent.rotSign * Random.Range(80.0f, 100.0f);
-            var newRot = Quaternion.Euler(0, rot, 0);
-            item.Agent.transform.SetPositionAndRotation(newStartPos, newRot);
-
-            item.Rb.linearVelocity = Vector3.zero;
-            item.Rb.angularVelocity = Vector3.zero;
-        }
-
-        //Reset Ball
-        ResetBall();
     }
 
     #endregion

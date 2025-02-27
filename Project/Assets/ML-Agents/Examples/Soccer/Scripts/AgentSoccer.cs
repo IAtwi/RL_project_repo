@@ -27,7 +27,8 @@ public class AgentSoccer : Agent
         Generic
     }
     // Intentionally added it as PlayerRole to avoid conflict with the Position-related functions
-    public enum PlayerRole {
+    public enum PlayerRole
+    {
         Defender,
         Midfielder,
         Striker
@@ -137,53 +138,6 @@ public class AgentSoccer : Agent
         agentRb.maxAngularVelocity = 500;
 
         m_ResetParams = Academy.Instance.EnvironmentParameters;
-    }
-
-    public void MoveAgent(ActionSegment<int> act)
-    {
-        var dirToGo = Vector3.zero;
-        var rotateDir = Vector3.zero;
-
-        m_KickPower = 0f;
-
-        var forwardAxis = act[0];
-        var rightAxis = act[1];
-        var rotateAxis = act[2];
-
-        switch (forwardAxis)
-        {
-            case 1:
-                dirToGo = transform.forward * m_ForwardSpeed;
-                m_KickPower = 1f;
-                break;
-            case 2:
-                dirToGo = transform.forward * -m_ForwardSpeed;
-                break;
-        }
-
-        switch (rightAxis)
-        {
-            case 1:
-                dirToGo = transform.right * m_LateralSpeed;
-                break;
-            case 2:
-                dirToGo = transform.right * -m_LateralSpeed;
-                break;
-        }
-
-        switch (rotateAxis)
-        {
-            case 1:
-                rotateDir = transform.up * -1f;
-                break;
-            case 2:
-                rotateDir = transform.up * 1f;
-                break;
-        }
-
-        transform.Rotate(rotateDir, Time.deltaTime * 100f * _rotationSpeed);
-        agentRb.AddForce(dirToGo * m_SoccerSettings.agentRunSpeed,
-            ForceMode.VelocityChange);
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -322,6 +276,55 @@ public class AgentSoccer : Agent
     //    }
     //}
 
+    #region Privates
+
+    private void MoveAgent(ActionSegment<int> act)
+    {
+        var dirToGo = Vector3.zero;
+        var rotateDir = Vector3.zero;
+
+        m_KickPower = 0f;
+
+        var forwardAxis = act[0];
+        var rightAxis = act[1];
+        var rotateAxis = act[2];
+
+        switch (forwardAxis)
+        {
+            case 1:
+                dirToGo = transform.forward * m_ForwardSpeed;
+                m_KickPower = 1f;
+                break;
+            case 2:
+                dirToGo = transform.forward * -m_ForwardSpeed;
+                break;
+        }
+
+        switch (rightAxis)
+        {
+            case 1:
+                dirToGo = transform.right * m_LateralSpeed;
+                break;
+            case 2:
+                dirToGo = transform.right * -m_LateralSpeed;
+                break;
+        }
+
+        switch (rotateAxis)
+        {
+            case 1:
+                rotateDir = transform.up * -1f;
+                break;
+            case 2:
+                rotateDir = transform.up * 1f;
+                break;
+        }
+
+        transform.Rotate(rotateDir, Time.deltaTime * 100f * _rotationSpeed);
+        agentRb.AddForce(dirToGo * m_SoccerSettings.agentRunSpeed,
+            ForceMode.VelocityChange);
+    }
+
     private bool HasPassedToTeammate()
     {
         var teamGroup = team == Team.Blue ? envController.m_BlueAgentGroup : envController.m_PurpleAgentGroup;
@@ -338,7 +341,8 @@ public class AgentSoccer : Agent
                 {
                     //Debug.Log((distanceBefore - distanceAfter) + " Passing reward: True");
                     return true;
-                } else
+                }
+                else
                 {
                     //Debug.Log((distanceBefore - distanceAfter) + " Passing reward: False");
                 }
@@ -421,4 +425,7 @@ public class AgentSoccer : Agent
         //return false;
         return false;
     }
+
+    #endregion
+
 }

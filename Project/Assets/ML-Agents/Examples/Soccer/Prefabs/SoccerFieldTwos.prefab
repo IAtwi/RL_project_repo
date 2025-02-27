@@ -2297,7 +2297,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 4a201d889faed439cbb658435bd68b98, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 93d05edf0a54f1e4895bff85e9899ebd, type: 3}
   m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: SoccerTwos
@@ -2583,7 +2583,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 4a201d889faed439cbb658435bd68b98, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 93d05edf0a54f1e4895bff85e9899ebd, type: 3}
   m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: SoccerTwos
@@ -2709,12 +2709,12 @@ Transform:
   - {fileID: 4540201673231058}
   - {fileID: 4867652605555692}
   - {fileID: 4444285537983296}
-  - {fileID: 4277721046484044}
   - {fileID: 7843730402782877929}
-  - {fileID: 5643284048999299831}
   - {fileID: 5467690350806341439}
-  - {fileID: 9063883317279128910}
   - {fileID: 1903950865600350311}
+  - {fileID: 4277721046484044}
+  - {fileID: 5643284048999299831}
+  - {fileID: 9063883317279128910}
   - {fileID: 6548244177077463472}
   - {fileID: 257899726}
   - {fileID: 3495822948476769810}
@@ -2735,8 +2735,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxEnvironmentSteps: 5000
   ball: {fileID: 1682753582128710}
-  ballRb: {fileID: 0}
   _scoreBoard: {fileID: 4208793123988112434}
+  _blueMaterial: {fileID: 2100000, guid: c9fa44c2c3f8ce74ca39a3355ea42631, type: 2}
+  _purpleMaterial: {fileID: 2100000, guid: b0da1813c36914e678ba57f2790424e1, type: 2}
+  _wallMeshRenderers:
+  - {fileID: 901290779}
+  - {fileID: 2091312084}
   AgentsList:
   - Agent: {fileID: 114850431417842684}
     StartingPos: {x: 0, y: 0, z: 0}
@@ -4510,7 +4514,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 4a201d889faed439cbb658435bd68b98, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 93d05edf0a54f1e4895bff85e9899ebd, type: 3}
   m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: SoccerTwos
@@ -5454,7 +5458,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 4a201d889faed439cbb658435bd68b98, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 93d05edf0a54f1e4895bff85e9899ebd, type: 3}
   m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: SoccerTwos
@@ -6044,7 +6048,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 4a201d889faed439cbb658435bd68b98, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 93d05edf0a54f1e4895bff85e9899ebd, type: 3}
   m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: SoccerTwos
@@ -7185,7 +7189,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 4a201d889faed439cbb658435bd68b98, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 93d05edf0a54f1e4895bff85e9899ebd, type: 3}
   m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: SoccerTwos
@@ -7749,7 +7753,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 4a201d889faed439cbb658435bd68b98, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 93d05edf0a54f1e4895bff85e9899ebd, type: 3}
   m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: SoccerTwos
@@ -8518,7 +8522,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 4a201d889faed439cbb658435bd68b98, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 93d05edf0a54f1e4895bff85e9899ebd, type: 3}
   m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: SoccerTwos
