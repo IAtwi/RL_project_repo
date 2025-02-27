@@ -2322,6 +2322,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  role: 0
   team: 0
   position: 2
   agentRb: {fileID: 0}
@@ -2347,8 +2348,8 @@ MonoBehaviour:
   - wall
   - purpleAgent
   - blueAgent
-  m_RaysPerDirection: 5
-  m_MaxRayDegrees: 60
+  m_RaysPerDirection: 6
+  m_MaxRayDegrees: 80
   m_SphereCastRadius: 0.5
   m_RayLength: 60
   m_RayLayerMask:
@@ -2607,6 +2608,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  role: 0
   team: 1
   position: 2
   agentRb: {fileID: 0}
@@ -2632,8 +2634,8 @@ MonoBehaviour:
   - wall
   - blueAgent
   - purpleAgent
-  m_RaysPerDirection: 5
-  m_MaxRayDegrees: 60
+  m_RaysPerDirection: 6
+  m_MaxRayDegrees: 80
   m_SphereCastRadius: 0.5
   m_RayLength: 60
   m_RayLayerMask:
@@ -4129,7 +4131,7 @@ MonoBehaviour:
   - wall
   - purpleAgent
   - blueAgent
-  m_RaysPerDirection: 1
+  m_RaysPerDirection: 2
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
   m_RayLength: 60
@@ -4533,6 +4535,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  role: 0
   team: 0
   position: 2
   agentRb: {fileID: 0}
@@ -4558,8 +4561,8 @@ MonoBehaviour:
   - wall
   - purpleAgent
   - blueAgent
-  m_RaysPerDirection: 5
-  m_MaxRayDegrees: 60
+  m_RaysPerDirection: 6
+  m_MaxRayDegrees: 80
   m_SphereCastRadius: 0.5
   m_RayLength: 60
   m_RayLayerMask:
@@ -4829,7 +4832,7 @@ MonoBehaviour:
   - wall
   - blueAgent
   - purpleAgent
-  m_RaysPerDirection: 1
+  m_RaysPerDirection: 2
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
   m_RayLength: 60
@@ -5150,7 +5153,7 @@ MonoBehaviour:
   - wall
   - blueAgent
   - purpleAgent
-  m_RaysPerDirection: 1
+  m_RaysPerDirection: 2
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
   m_RayLength: 60
@@ -5476,6 +5479,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  role: 0
   team: 1
   position: 2
   agentRb: {fileID: 0}
@@ -5501,8 +5505,8 @@ MonoBehaviour:
   - wall
   - blueAgent
   - purpleAgent
-  m_RaysPerDirection: 5
-  m_MaxRayDegrees: 60
+  m_RaysPerDirection: 6
+  m_MaxRayDegrees: 80
   m_SphereCastRadius: 0.5
   m_RayLength: 60
   m_RayLayerMask:
@@ -5767,7 +5771,7 @@ MonoBehaviour:
   - wall
   - blueAgent
   - purpleAgent
-  m_RaysPerDirection: 1
+  m_RaysPerDirection: 2
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
   m_RayLength: 60
@@ -5833,7 +5837,7 @@ MonoBehaviour:
   - wall
   - purpleAgent
   - blueAgent
-  m_RaysPerDirection: 1
+  m_RaysPerDirection: 2
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
   m_RayLength: 60
@@ -6065,6 +6069,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  role: 0
   team: 1
   position: 2
   agentRb: {fileID: 0}
@@ -6090,8 +6095,8 @@ MonoBehaviour:
   - wall
   - blueAgent
   - purpleAgent
-  m_RaysPerDirection: 5
-  m_MaxRayDegrees: 60
+  m_RaysPerDirection: 6
+  m_MaxRayDegrees: 80
   m_SphereCastRadius: 0.5
   m_RayLength: 60
   m_RayLayerMask:
@@ -6525,7 +6530,7 @@ MonoBehaviour:
   - wall
   - purpleAgent
   - blueAgent
-  m_RaysPerDirection: 1
+  m_RaysPerDirection: 2
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
   m_RayLength: 60
@@ -7205,6 +7210,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  role: 0
   team: 0
   position: 2
   agentRb: {fileID: 0}
@@ -7230,8 +7236,8 @@ MonoBehaviour:
   - wall
   - purpleAgent
   - blueAgent
-  m_RaysPerDirection: 5
-  m_MaxRayDegrees: 60
+  m_RaysPerDirection: 6
+  m_MaxRayDegrees: 80
   m_SphereCastRadius: 0.5
   m_RayLength: 60
   m_RayLayerMask:
@@ -7619,7 +7625,7 @@ MonoBehaviour:
   - wall
   - blueAgent
   - purpleAgent
-  m_RaysPerDirection: 1
+  m_RaysPerDirection: 2
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
   m_RayLength: 60
@@ -7768,6 +7774,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  role: 0
   team: 0
   position: 2
   agentRb: {fileID: 0}
@@ -7793,8 +7800,8 @@ MonoBehaviour:
   - wall
   - purpleAgent
   - blueAgent
-  m_RaysPerDirection: 5
-  m_MaxRayDegrees: 60
+  m_RaysPerDirection: 6
+  m_MaxRayDegrees: 80
   m_SphereCastRadius: 0.5
   m_RayLength: 60
   m_RayLayerMask:
@@ -8536,6 +8543,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  role: 0
   team: 1
   position: 2
   agentRb: {fileID: 0}
@@ -8561,8 +8569,8 @@ MonoBehaviour:
   - wall
   - blueAgent
   - purpleAgent
-  m_RaysPerDirection: 5
-  m_MaxRayDegrees: 60
+  m_RaysPerDirection: 6
+  m_MaxRayDegrees: 80
   m_SphereCastRadius: 0.5
   m_RayLength: 60
   m_RayLayerMask:
@@ -8999,7 +9007,7 @@ MonoBehaviour:
   - wall
   - purpleAgent
   - blueAgent
-  m_RaysPerDirection: 1
+  m_RaysPerDirection: 2
   m_MaxRayDegrees: 45
   m_SphereCastRadius: 0.5
   m_RayLength: 60
