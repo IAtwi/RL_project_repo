@@ -1,6 +1,7 @@
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Policies;
+using Unity.MLAgents.Sensors;
 using UnityEngine;
 
 public enum Team
@@ -208,6 +209,32 @@ public class AgentSoccer : Agent
     public override void OnEpisodeBegin()
     {
         m_BallTouch = m_ResetParams.GetWithDefault("ball_touch", 0);
+    }
+
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        // Local awareness (via RayPerception)
+        // The RayPerceptionSensor should already add observations automatically
+
+        // Add agent's own position
+        sensor.AddObservation(transform.position.x);
+        sensor.AddObservation(transform.position.z);
+
+        // Add ball position (global info)
+        SoccerEnvController envController = GetComponentInParent<SoccerEnvController>();
+        sensor.AddObservation(envController.ball.transform.position.x);
+        sensor.AddObservation(envController.ball.transform.position.z);
+
+        // Add teammate positions (shared observation)
+        var agentGroup = team == Team.Blue ? envController.m_BlueAgentGroup.GetRegisteredAgents() : envController.m_PurpleAgentGroup.GetRegisteredAgents();
+        foreach (var agent in agentGroup)
+        {
+            if (agent != this)  // Exclude self
+            {
+                sensor.AddObservation(agent.transform.position.x);
+                sensor.AddObservation(agent.transform.position.z);
+            }
+        }
     }
 
 }

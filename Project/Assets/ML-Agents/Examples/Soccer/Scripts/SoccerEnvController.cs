@@ -39,8 +39,8 @@ public class SoccerEnvController : MonoBehaviour
     //List of Agents On Platform
     public List<PlayerInfo> AgentsList = new List<PlayerInfo>();
 
-    private SimpleMultiAgentGroup m_BlueAgentGroup;
-    private SimpleMultiAgentGroup m_PurpleAgentGroup;
+    public SimpleMultiAgentGroup m_BlueAgentGroup;
+    public SimpleMultiAgentGroup m_PurpleAgentGroup;
 
     private int m_ResetTimer;
 
