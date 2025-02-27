@@ -373,20 +373,21 @@ public class AgentSoccer : Agent
 
     private bool IsInFormation()
     {
-        float toleranceDistance = 2.0f; // How close to the target position/formation is close enough
-        Vector3 targetPos = envController.GetTargetFormationPosition(this);
-        float distance = Vector3.Distance(transform.position, targetPos);
+        //float toleranceDistance = 2.0f; // How close to the target position/formation is close enough
+        //Vector3 targetPos = envController.GetTargetFormationPosition(this);
+        //float distance = Vector3.Distance(transform.position, targetPos);
 
-        if (distance < toleranceDistance)
-        {
-            Debug.Log(this.team.ToString() + this.role.ToString() + distance + " Formation reward: True");
-            return true;
-        }
-        else
-        {
-            //Debug.Log(this.team.ToString() + this.role.ToString() + distance + " Formation reward: False");
-            return false;
-        }
+        //if (distance < toleranceDistance)
+        //{
+        //    Debug.Log(this.team.ToString() + this.role.ToString() + distance + " Formation reward: True");
+        //    return true;
+        //}
+        //else
+        //{
+        //    //Debug.Log(this.team.ToString() + this.role.ToString() + distance + " Formation reward: False");
+        //    return false;
+        //}
+        return false
     }
 
     private bool IsBlockingShot()
