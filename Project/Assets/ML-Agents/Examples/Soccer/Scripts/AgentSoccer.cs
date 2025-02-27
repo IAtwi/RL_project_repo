@@ -219,6 +219,12 @@ public class AgentSoccer : Agent
             AddReward(0.1f);
         }
 
+        // Reward for blocking shots as a defender
+        if (role == PlayerRole.Defender && IsBlockingShot())
+        {
+            AddReward(0.3f);
+        }
+
         // Save the current ball position for next step
         previousBallPosition = envController.ball.transform.position;
     }
@@ -381,5 +387,37 @@ public class AgentSoccer : Agent
             //Debug.Log(this.team.ToString() + this.role.ToString() + distance + " Formation reward: False");
             return false;
         }
+    }
+
+    private bool IsBlockingShot()
+    {
+        ///<note-to-self>
+        ///I need to fix how to detect the position of the goal, for reference, check SoccerEnvController.cs and SoccerBallController.cs,
+        ///in there you can find how they set a purpleGoal tag to check if the ball collided with the purple goal, I need to do something similar
+        ///the tag is set in unity on a prefab level, in Field > Purple/Blue Goal
+        ///
+        /// IT MIGHT STILL BE WORTH IT TO MAKE A GETGOAL() FUNCTION IN SoccerEnvController.cs
+        ///</note-to-self>
+
+        //// If the agent is a defender and the ball is moving towards the goal, it's a shot
+        //if (role == PlayerRole.Defender)
+        //{
+        //    // Scratched, something is already implemented so might be worth checking instead of making a new GetGoal() function
+        //    Vector3 goalPos = team == Team.Blue ? envController.m_PurpleAgentGroup.GetGoal().position : envController.m_BlueAgentGroup.GetGoal().position;
+        //    Vector3 ballDirection = envController.ball.transform.position - goalPos;
+        //    Vector3 agentDirection = transform.position - goalPos;
+        //    // If the ball is moving towards the goal and the agent is in the way, it's a block
+        //    if (Vector3.Dot(ballDirection, agentDirection) > 0)
+        //    {
+        //        Debug.Log("Block reward: True");
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("Block reward: False");
+        //    }
+        //}
+        //return false;
+        return false;
     }
 }
