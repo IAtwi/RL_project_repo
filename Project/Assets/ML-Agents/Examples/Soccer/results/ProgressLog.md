@@ -18,6 +18,7 @@ Run IDs are used as the heading for the logs
 - **Description**: First serious run with 8 agents in the environment. The model is trained with the same configuration as the previous run. Rewards for blocking shots and staying in formation have been disabled.
 - **Steps**: 1.2M
 - **Training Time**: 50m
+- **Initiated From**: scratch
 - **Final ELO**: 1208.563
 - **Rewards**:
   - **Team Rewards**:
@@ -35,6 +36,7 @@ Run IDs are used as the heading for the logs
 - **Description**: Second run with 8 agents in the environment. Number of fields was increased to 16 (was 8) which greatly sped up the training time at the cost of additional resources. The model is trained with the same configuration as the previous run. Rewards for passing and positioning where greatly decreased and proportionate to the number of max steps.
 - **Steps**: 2.1M
 - **Training Time**: 1h 46m
+- **Initiated From**: scratch
 - **Peak ELO**: 1227 at 1.5M steps
 - **Final ELO**: 1208.563
 - **Best Model**: SoccerTwos-1499245.onnx
