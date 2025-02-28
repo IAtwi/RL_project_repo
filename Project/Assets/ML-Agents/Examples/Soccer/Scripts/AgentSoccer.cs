@@ -59,6 +59,12 @@ public class AgentSoccer : Agent
     public float rotSign;
     private Vector3 previousBallPosition;
     private SoccerEnvController envController;
+    private SimpleMultiAgentGroup ownGroup;
+    private SimpleMultiAgentGroup opponentGroup;
+    private float PASSING_REWARD = 0.2f;
+    private float SPACING_REWARD = 0.1f;
+    private float FORMATION_REWARD = 0.1f;
+    private float BLOCKING_REWARD = 0.3f;
 
     private EnvironmentParameters m_ResetParams;
 
@@ -75,15 +81,15 @@ public class AgentSoccer : Agent
                 Debug.LogError("SoccerEnvController: ball is not set.");
             }
 
-            //if (envController.m_BlueAgentGroup == null)
-            //{
-            //    Debug.LogError("SoccerEnvController: m_BlueAgentGroup is not set.");
-            //}
+            if (envController.m_BlueAgentGroup == null)
+            {
+                Debug.LogError("SoccerEnvController: m_BlueAgentGroup is not set.");
+            }
 
-            //if (envController.m_PurpleAgentGroup == null)
-            //{
-            //    Debug.LogError("SoccerEnvController: m_PurpleAgentGroup is not set.");
-            //}
+            if (envController.m_PurpleAgentGroup == null)
+            {
+                Debug.LogError("SoccerEnvController: m_PurpleAgentGroup is not set.");
+            }
         }
         else
         {
@@ -140,6 +146,12 @@ public class AgentSoccer : Agent
         m_ResetParams = Academy.Instance.EnvironmentParameters;
     }
 
+    public void InitializeAgent(SimpleMultiAgentGroup ownGroup, SimpleMultiAgentGroup opponentGroup)
+    {
+        this.ownGroup = ownGroup;
+        this.opponentGroup = opponentGroup;
+    }
+
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
         if (position == Position.Goalie)
@@ -158,25 +170,25 @@ public class AgentSoccer : Agent
         // Reward passing to teammates
         if (HasPassedToTeammate())
         {
-            AddReward(0.2f);  // Small reward for successful pass
+            ownGroup.AddGroupReward(PASSING_REWARD);  // Small reward for successful pass
         }
 
         // Encourage spreading out
         if (IsProperlySpaced())
         {
-            AddReward(0.1f);
+            ownGroup.AddGroupReward(SPACING_REWARD);
         }
 
         // Reward for maintaining formation
         if (IsInFormation())
         {
-            AddReward(0.1f);
+            ownGroup.AddGroupReward(FORMATION_REWARD);
         }
 
         // Reward for blocking shots as a defender
         if (role == PlayerRole.Defender && IsBlockingShot())
         {
-            AddReward(0.3f);
+            ownGroup.AddGroupReward(BLOCKING_REWARD);
         }
 
         // Save the current ball position for next step
