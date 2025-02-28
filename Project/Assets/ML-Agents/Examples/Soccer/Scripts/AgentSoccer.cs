@@ -58,6 +58,7 @@ public class AgentSoccer : Agent
     private SoccerEnvController envController;
     private SimpleMultiAgentGroup ownGroup;
     private SimpleMultiAgentGroup opponentGroup;
+    private bool CUSTOM_REWARDS = false;
     private float PASSING_REWARD, SPACING_REWARD, FORMATION_REWARD, BLOCKING_REWARD;
 
     private EnvironmentParameters m_ResetParams;
@@ -130,28 +131,31 @@ public class AgentSoccer : Agent
 
         MoveAgent(actionBuffers.DiscreteActions);
 
-        // Reward passing to teammates
-        if (HasPassedToTeammate())
+        if (CUSTOM_REWARDS)
         {
-            ownGroup.AddGroupReward(PASSING_REWARD);  // Small reward for successful pass
-        }
+            // Reward passing to teammates
+            if (HasPassedToTeammate())
+            {
+                ownGroup.AddGroupReward(PASSING_REWARD);  // Small reward for successful pass
+            }
 
-        // Encourage spreading out
-        if (IsProperlySpaced())
-        {
-            ownGroup.AddGroupReward(SPACING_REWARD);
-        }
+            // Encourage spreading out
+            if (IsProperlySpaced())
+            {
+                ownGroup.AddGroupReward(SPACING_REWARD);
+            }
 
-        // Reward for maintaining formation
-        if (IsInFormation())
-        {
-            ownGroup.AddGroupReward(FORMATION_REWARD);
-        }
+            // Reward for maintaining formation
+            if (IsInFormation())
+            {
+                ownGroup.AddGroupReward(FORMATION_REWARD);
+            }
 
-        // Reward for blocking shots as a defender
-        if (role == PlayerRole.Defender && IsBlockingShot())
-        {
-            ownGroup.AddGroupReward(BLOCKING_REWARD);
+            // Reward for blocking shots as a defender
+            if (role == PlayerRole.Defender && IsBlockingShot())
+            {
+                ownGroup.AddGroupReward(BLOCKING_REWARD);
+            }
         }
 
         // Save the current ball position for next step
@@ -309,73 +313,70 @@ public class AgentSoccer : Agent
 
     private bool HasPassedToTeammate()
     {
-        //var teamGroup = team == Team.Blue ? envController.m_BlueAgentGroup : envController.m_PurpleAgentGroup;
+        var teamGroup = team == Team.Blue ? envController.m_BlueAgentGroup : envController.m_PurpleAgentGroup;
 
-        //foreach (var teammate in teamGroup.GetRegisteredAgents())
-        //{
-        //    if (teammate != this)
-        //    {
-        //        float distanceBefore = Vector3.Distance(previousBallPosition, teammate.transform.position);
-        //        float distanceAfter = Vector3.Distance(envController.ball.transform.position, teammate.transform.position);
+        foreach (var teammate in teamGroup.GetRegisteredAgents())
+        {
+            if (teammate != this)
+            {
+                float distanceBefore = Vector3.Distance(previousBallPosition, teammate.transform.position);
+                float distanceAfter = Vector3.Distance(envController.ball.transform.position, teammate.transform.position);
 
-        //        // If ball got closer to a teammate, it's a pass
-        //        if (distanceAfter < distanceBefore)
-        //        {
-        //            //Debug.Log((distanceBefore - distanceAfter) + " Passing reward: True");
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            //Debug.Log((distanceBefore - distanceAfter) + " Passing reward: False");
-        //        }
-        //    }
-        //}
-        //return false;
+                // If ball got closer to a teammate, it's a pass
+                if (distanceAfter < distanceBefore)
+                {
+                    //Debug.Log((distanceBefore - distanceAfter) + " Passing reward: True");
+                    return true;
+                }
+                else
+                {
+                    //Debug.Log((distanceBefore - distanceAfter) + " Passing reward: False");
+                }
+            }
+        }
         return false;
     }
 
     private bool IsProperlySpaced()
     {
-        //float minDistance = 2.0f; // Minimum distance between teammates
+        float minDistance = 2.0f; // Minimum distance between teammates
 
-        //var teamGroup = team == Team.Blue ? envController.m_BlueAgentGroup : envController.m_PurpleAgentGroup;
-        //foreach (var teammate in teamGroup.GetRegisteredAgents())
-        //{
-        //    if (teammate != this)
-        //    {
-        //        float distance = Vector3.Distance(transform.position, teammate.transform.position);
-        //        if (distance < minDistance)
-        //        {
-        //            //Debug.Log(distance + " Spacing reward: False");
-        //            return false;
-        //        }
-        //        else
-        //        {
-        //            //Debug.Log(distance + " Spacing reward: True");
-        //        }
-        //    }
-        //}
-        //return true;
-        return false;
+        var teamGroup = team == Team.Blue ? envController.m_BlueAgentGroup : envController.m_PurpleAgentGroup;
+        foreach (var teammate in teamGroup.GetRegisteredAgents())
+        {
+            if (teammate != this)
+            {
+                float distance = Vector3.Distance(transform.position, teammate.transform.position);
+                if (distance < minDistance)
+                {
+                    //Debug.Log(distance + " Spacing reward: False");
+                    return false;
+                }
+                else
+                {
+                    //Debug.Log(distance + " Spacing reward: True");
+                }
+            }
+        }
+        return true;
     }
 
     private bool IsInFormation()
     {
-        //float toleranceDistance = 2.0f; // How close to the target position/formation is close enough
-        //Vector3 targetPos = envController.GetTargetFormationPosition(this);
-        //float distance = Vector3.Distance(transform.position, targetPos);
+        float toleranceDistance = 2.0f; // How close to the target position/formation is close enough
+        Vector3 targetPos = envController.GetTargetFormationPosition(this);
+        float distance = Vector3.Distance(transform.position, targetPos);
 
-        //if (distance < toleranceDistance)
-        //{
-        //    Debug.Log(this.team.ToString() + this.role.ToString() + distance + " Formation reward: True");
-        //    return true;
-        //}
-        //else
-        //{
-        //    //Debug.Log(this.team.ToString() + this.role.ToString() + distance + " Formation reward: False");
-        //    return false;
-        //}
-        return false;
+        if (distance < toleranceDistance)
+        {
+            Debug.Log(this.team.ToString() + this.role.ToString() + distance + " Formation reward: True");
+            return true;
+        }
+        else
+        {
+            //Debug.Log(this.team.ToString() + this.role.ToString() + distance + " Formation reward: False");
+            return false;
+        }
     }
 
     private bool IsBlockingShot()
