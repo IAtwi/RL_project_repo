@@ -43,8 +43,25 @@ Run IDs are used as the heading for the logs
 - **Rewards**:
   - **Team Rewards**:
     - **Goal (Team Score)**: +1 - Time Passed / MaxSteps
-  - **Agent Rewards**:
     - **Ball Touch**: None
     - **Passing to Teammates (Agent Score)**: +5 / MaxSteps
     - **Spacing Out (Agent Score)**: +1 / MaxSteps
+  - **Agent Rewards**:
+    - None
 - **Notes**: Patterns of agents just sticking to a goal were noticed again, noticeably it's often two agents, with each being at one end of the goal. There are suspicions that they are farming the passing reward by just staying in that place even if they are doing nothing, so we might disable the passing reward for the next run and see how that goes.
+
+### SoccerFours0.3
+
+- **Title**: SoccerFours0.3
+- **Date**: 2025-02-28
+- **Description**: No changes to the configuration. This was to see how the agents will behave without all the custom rewards.
+- **Steps**: 1.2M
+- **Training Time**: 1h 13m
+- **Initiated From**: scratch
+- **Peak ELO**: N/A
+- **Final ELO**: N/A
+- **Best Model**: N/A
+- **Rewards**:
+  - **Team Rewards**:
+    - **Goal (Team Score)**: +1 - Time Passed / MaxSteps
+  - **Notes**: There was no learning, agents just stood still.
