@@ -27,3 +27,22 @@ Run IDs are used as the heading for the logs
     - **Passing to Teammates (Agent Score)**: +0.2
     - **Spacing Out (Agent Score)**: +0.1
 - **Notes**: Some agents just stuck to the goal and never moved. There is a lot to improve.
+
+### SoccerFours0.2
+
+- **Title**: SoccerFours0.2
+- **Date**: 2025-02-28
+- **Description**: Second run with 8 agents in the environment. Number of fields was increased to 16 (was 8) which greatly sped up the training time at the cost of additional resources. The model is trained with the same configuration as the previous run. Rewards for passing and positioning where greatly decreased and proportionate to the number of max steps.
+- **Steps**: 2.1M
+- **Training Time**: 1h 46m
+- **Peak ELO**: 1227 at 1.5M steps
+- **Final ELO**: 1208.563
+- **Best Model**: SoccerTwos-1499245.onnx
+- **Rewards**:
+  - **Team Rewards**:
+    - **Goal (Team Score)**: +1 - Time Passed / MaxSteps
+  - **Agent Rewards**:
+    - **Ball Touch**: None
+    - **Passing to Teammates (Agent Score)**: +5 / MaxSteps
+    - **Spacing Out (Agent Score)**: +1 / MaxSteps
+- **Notes**: Patterns of agents just sticking to a goal were noticed again, noticeably it's often two agents, with each being at one end of the goal. There are suspicions that they are farming the passing reward by just staying in that place even if they are doing nothing, so we might disable the passing reward for the next run and see how that goes.
