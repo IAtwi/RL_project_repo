@@ -34,11 +34,9 @@ public class AgentSoccer : Agent
         Striker
     }
 
-    [SerializeField]
     public PlayerRole role;
+    [HideInInspector] public Team team;
 
-    [HideInInspector]
-    public Team team;
     private float m_KickPower;
     private readonly float _rotationSpeed = 1.25f;
     // The coefficient for the reward for colliding with a ball. Set using curriculum.
@@ -51,8 +49,7 @@ public class AgentSoccer : Agent
     private float m_ForwardSpeed;
 
 
-    [HideInInspector]
-    public Rigidbody agentRb;
+    private Rigidbody agentRb;
     private SoccerSettings m_SoccerSettings;
     private BehaviorParameters m_BehaviorParameters;
     public Vector3 initialPos;
@@ -68,37 +65,21 @@ public class AgentSoccer : Agent
     public override void Initialize()
     {
         envController = GetComponentInParent<SoccerEnvController>();
+        m_SoccerSettings = FindAnyObjectByType<SoccerSettings>();
+        agentRb = GetComponent<Rigidbody>();
+        agentRb.maxAngularVelocity = 500;
+
+        m_BehaviorParameters = GetComponent<BehaviorParameters>();
+
         previousBallPosition = envController.ball.transform.position;  // Initialize ball position
-        if (envController != null)
-        {
-            m_Existential = 1f / envController.MaxEnvironmentSteps;
-            PASSING_REWARD = 5f / envController.MaxEnvironmentSteps;
-            SPACING_REWARD = 1f / envController.MaxEnvironmentSteps;
-            FORMATION_REWARD = 1f / envController.MaxEnvironmentSteps;
-            BLOCKING_REWARD = 1f / envController.MaxEnvironmentSteps;
 
-            if (envController.ball == null)
-            {
-                Debug.LogError("SoccerEnvController: ball is not set.");
-            }
+        m_Existential = 1f / envController.MaxEnvironmentSteps;
+        PASSING_REWARD = 5f / envController.MaxEnvironmentSteps;
+        SPACING_REWARD = 1f / envController.MaxEnvironmentSteps;
+        FORMATION_REWARD = 1f / envController.MaxEnvironmentSteps;
+        BLOCKING_REWARD = 1f / envController.MaxEnvironmentSteps;
 
-            if (envController.m_BlueAgentGroup == null)
-            {
-                Debug.LogError("SoccerEnvController: m_BlueAgentGroup is not set.");
-            }
 
-            if (envController.m_PurpleAgentGroup == null)
-            {
-                Debug.LogError("SoccerEnvController: m_PurpleAgentGroup is not set.");
-            }
-        }
-        else
-        {
-            Debug.LogError("SoccerEnvController is not found in parent.");
-            m_Existential = 1f / MaxStep;
-        }
-
-        m_BehaviorParameters = gameObject.GetComponent<BehaviorParameters>();
         if (m_BehaviorParameters.TeamId == (int)Team.Blue)
         {
             team = Team.Blue;
@@ -112,17 +93,7 @@ public class AgentSoccer : Agent
             rotSign = -1f;
         }
 
-        // Assign role (we _should_ be able to manually set the role in Unity too)
-        // For now settled on assigning roles based on the agent's name
-        // For now it's only detecting purple defenders and blue strikers which is...
-        // most likely a mistake on my end, specifically in how i defined the values
-        // of the target positions in SoccerEnvController.cs
-        if (team == Team.Blue)
-        {
-            if (name.Contains("Defender")) role = PlayerRole.Defender;
-            else if (name.Contains("Midfielder")) role = PlayerRole.Midfielder;
-            else role = PlayerRole.Striker;
-        }
+        SetPlayerRole();
 
         m_LateralSpeed = 0.5f;
         m_ForwardSpeed = 0.7f;
@@ -134,15 +105,6 @@ public class AgentSoccer : Agent
         {
             m_ForwardSpeed = 1f;
         }
-
-        m_SoccerSettings = FindAnyObjectByType<SoccerSettings>();
-        if (m_SoccerSettings == null)
-        {
-            Debug.LogError("SoccerSettings is not found.");
-        }
-
-        agentRb = GetComponent<Rigidbody>();
-        agentRb.maxAngularVelocity = 500;
 
         m_ResetParams = Academy.Instance.EnvironmentParameters;
     }
@@ -290,6 +252,13 @@ public class AgentSoccer : Agent
     //}
 
     #region Privates
+
+    private void SetPlayerRole()
+    {
+        if (name.Contains("Defender")) role = PlayerRole.Defender;
+        else if (name.Contains("Midfielder")) role = PlayerRole.Midfielder;
+        else role = PlayerRole.Striker;
+    }
 
     private void MoveAgent(ActionSegment<int> act)
     {
