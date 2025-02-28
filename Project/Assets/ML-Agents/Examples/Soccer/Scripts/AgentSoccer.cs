@@ -59,7 +59,7 @@ public class AgentSoccer : Agent
     private SimpleMultiAgentGroup ownGroup;
     private SimpleMultiAgentGroup opponentGroup;
     private bool CUSTOM_REWARDS = false;
-    private float PASSING_REWARD, SPACING_REWARD, FORMATION_REWARD, BLOCKING_REWARD;
+    private float PASSING_REWARD, SPACING_REWARD, FORMATION_REWARD, BLOCKING_REWARD, BALL_TOUCH_REWARD_DEFAULT_VALUE;
 
     private EnvironmentParameters m_ResetParams;
 
@@ -79,6 +79,7 @@ public class AgentSoccer : Agent
         SPACING_REWARD = 1f / envController.MaxEnvironmentSteps;
         FORMATION_REWARD = 1f / envController.MaxEnvironmentSteps;
         BLOCKING_REWARD = 1f / envController.MaxEnvironmentSteps;
+        BALL_TOUCH_REWARD_DEFAULT_VALUE = 1f / envController.MaxEnvironmentSteps;
 
 
         if (m_BehaviorParameters.TeamId == (int)Team.Blue)
@@ -131,14 +132,14 @@ public class AgentSoccer : Agent
 
         MoveAgent(actionBuffers.DiscreteActions);
 
+        // Reward passing to teammates
+        if (HasPassedToTeammate())
+        {
+            AddReward(PASSING_REWARD);  // Small reward for successful pass
+        }
+
         if (CUSTOM_REWARDS)
         {
-            // Reward passing to teammates
-            if (HasPassedToTeammate())
-            {
-                ownGroup.AddGroupReward(PASSING_REWARD);  // Small reward for successful pass
-            }
-
             // Encourage spreading out
             if (IsProperlySpaced())
             {
