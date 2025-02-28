@@ -61,10 +61,7 @@ public class AgentSoccer : Agent
     private SoccerEnvController envController;
     private SimpleMultiAgentGroup ownGroup;
     private SimpleMultiAgentGroup opponentGroup;
-    private float PASSING_REWARD = 0.2f;
-    private float SPACING_REWARD = 0.1f;
-    private float FORMATION_REWARD = 0.1f;
-    private float BLOCKING_REWARD = 0.3f;
+    private float PASSING_REWARD, SPACING_REWARD, FORMATION_REWARD, BLOCKING_REWARD;
 
     private EnvironmentParameters m_ResetParams;
 
@@ -75,6 +72,10 @@ public class AgentSoccer : Agent
         if (envController != null)
         {
             m_Existential = 1f / envController.MaxEnvironmentSteps;
+            PASSING_REWARD = 5f / envController.MaxEnvironmentSteps;
+            SPACING_REWARD = 1f / envController.MaxEnvironmentSteps;
+            FORMATION_REWARD = 1f / envController.MaxEnvironmentSteps;
+            BLOCKING_REWARD = 1f / envController.MaxEnvironmentSteps;
 
             if (envController.ball == null)
             {
