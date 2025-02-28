@@ -23,6 +23,7 @@ public class SoccerEnvController : MonoBehaviour
     [SerializeField] private List<MeshRenderer> _wallMeshRenderers;
     [SerializeField] private List<PlayerInfo> AgentsList = new(); //List of Agents On Platform
 
+
     public SimpleMultiAgentGroup m_BlueAgentGroup;
     public SimpleMultiAgentGroup m_PurpleAgentGroup;
 
@@ -30,7 +31,7 @@ public class SoccerEnvController : MonoBehaviour
     private int m_ResetTimer;
     private Rigidbody ballRb;
     private Vector3 m_BallStartingPos;
-
+    private float GOAL_REWARD = 5.0f;
 
     #region Publics
 
@@ -68,13 +69,13 @@ public class SoccerEnvController : MonoBehaviour
     {
         if (scoredTeam == Team.Blue)
         {
-            m_BlueAgentGroup.AddGroupReward(1 - (float)m_ResetTimer / MaxEnvironmentSteps);
-            m_PurpleAgentGroup.AddGroupReward(-1);
+            m_BlueAgentGroup.AddGroupReward(GOAL_REWARD - (float)m_ResetTimer / MaxEnvironmentSteps);
+            m_PurpleAgentGroup.AddGroupReward(-GOAL_REWARD);
         }
         else
         {
-            m_PurpleAgentGroup.AddGroupReward(1 - (float)m_ResetTimer / MaxEnvironmentSteps);
-            m_BlueAgentGroup.AddGroupReward(-1);
+            m_PurpleAgentGroup.AddGroupReward(GOAL_REWARD - (float)m_ResetTimer / MaxEnvironmentSteps);
+            m_BlueAgentGroup.AddGroupReward(-GOAL_REWARD);
         }
         m_PurpleAgentGroup.EndGroupEpisode();
         m_BlueAgentGroup.EndGroupEpisode();
@@ -116,6 +117,10 @@ public class SoccerEnvController : MonoBehaviour
         m_PurpleAgentGroup = new SimpleMultiAgentGroup();
         ballRb = ball.GetComponent<Rigidbody>();
         m_BallStartingPos = new Vector3(ball.transform.position.x, ball.transform.position.y, ball.transform.position.z);
+
+        ///<note-to-do>
+        /// I might change this from AgentsList to Blue and Purple Agents List to find some better way to pass Agent Groups and assign rewards to them
+        ///</note-to-do>
         foreach (var item in AgentsList)
         {
             item.StartingPos = item.Agent.transform.position;
@@ -124,10 +129,12 @@ public class SoccerEnvController : MonoBehaviour
             if (item.Agent.team == Team.Blue)
             {
                 m_BlueAgentGroup.RegisterAgent(item.Agent);
+                item.Agent.InitializeAgent(m_BlueAgentGroup, m_PurpleAgentGroup);
             }
             else
             {
                 m_PurpleAgentGroup.RegisterAgent(item.Agent);
+                item.Agent.InitializeAgent(m_PurpleAgentGroup, m_BlueAgentGroup);
             }
         }
         _scoreBoard.ResetScores();
