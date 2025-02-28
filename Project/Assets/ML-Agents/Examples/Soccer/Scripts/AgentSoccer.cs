@@ -340,52 +340,54 @@ public class AgentSoccer : Agent
 
     private bool HasPassedToTeammate()
     {
-        var teamGroup = team == Team.Blue ? envController.m_BlueAgentGroup : envController.m_PurpleAgentGroup;
+        //var teamGroup = team == Team.Blue ? envController.m_BlueAgentGroup : envController.m_PurpleAgentGroup;
 
-        foreach (var teammate in teamGroup.GetRegisteredAgents())
-        {
-            if (teammate != this)
-            {
-                float distanceBefore = Vector3.Distance(previousBallPosition, teammate.transform.position);
-                float distanceAfter = Vector3.Distance(envController.ball.transform.position, teammate.transform.position);
+        //foreach (var teammate in teamGroup.GetRegisteredAgents())
+        //{
+        //    if (teammate != this)
+        //    {
+        //        float distanceBefore = Vector3.Distance(previousBallPosition, teammate.transform.position);
+        //        float distanceAfter = Vector3.Distance(envController.ball.transform.position, teammate.transform.position);
 
-                // If ball got closer to a teammate, it's a pass
-                if (distanceAfter < distanceBefore)
-                {
-                    //Debug.Log((distanceBefore - distanceAfter) + " Passing reward: True");
-                    return true;
-                }
-                else
-                {
-                    //Debug.Log((distanceBefore - distanceAfter) + " Passing reward: False");
-                }
-            }
-        }
+        //        // If ball got closer to a teammate, it's a pass
+        //        if (distanceAfter < distanceBefore)
+        //        {
+        //            //Debug.Log((distanceBefore - distanceAfter) + " Passing reward: True");
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            //Debug.Log((distanceBefore - distanceAfter) + " Passing reward: False");
+        //        }
+        //    }
+        //}
+        //return false;
         return false;
     }
 
     private bool IsProperlySpaced()
     {
-        float minDistance = 2.0f; // Minimum distance between teammates
+        //float minDistance = 2.0f; // Minimum distance between teammates
 
-        var teamGroup = team == Team.Blue ? envController.m_BlueAgentGroup : envController.m_PurpleAgentGroup;
-        foreach (var teammate in teamGroup.GetRegisteredAgents())
-        {
-            if (teammate != this)
-            {
-                float distance = Vector3.Distance(transform.position, teammate.transform.position);
-                if (distance < minDistance)
-                {
-                    //Debug.Log(distance + " Spacing reward: False");
-                    return false;
-                }
-                else
-                {
-                    //Debug.Log(distance + " Spacing reward: True");
-                }
-            }
-        }
-        return true;
+        //var teamGroup = team == Team.Blue ? envController.m_BlueAgentGroup : envController.m_PurpleAgentGroup;
+        //foreach (var teammate in teamGroup.GetRegisteredAgents())
+        //{
+        //    if (teammate != this)
+        //    {
+        //        float distance = Vector3.Distance(transform.position, teammate.transform.position);
+        //        if (distance < minDistance)
+        //        {
+        //            //Debug.Log(distance + " Spacing reward: False");
+        //            return false;
+        //        }
+        //        else
+        //        {
+        //            //Debug.Log(distance + " Spacing reward: True");
+        //        }
+        //    }
+        //}
+        //return true;
+        return false;
     }
 
     private bool IsInFormation()
