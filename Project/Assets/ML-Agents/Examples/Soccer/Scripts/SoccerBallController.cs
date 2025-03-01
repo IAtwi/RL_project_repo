@@ -3,25 +3,21 @@ using UnityEngine;
 public class SoccerBallController : MonoBehaviour
 {
     public GameObject area;
-    [HideInInspector]
-    public SoccerEnvController envController;
-    public string purpleGoalTag; //will be used to check if collided with purple goal
-    public string blueGoalTag; //will be used to check if collided with blue goal
+
+    private SoccerEnvController envController;
+    private SoccerSettings m_SoccerSettings;
 
     void Start()
     {
         envController = area.GetComponent<SoccerEnvController>();
+        m_SoccerSettings = FindAnyObjectByType<SoccerSettings>();
     }
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.CompareTag(purpleGoalTag)) //ball touched purple goal
-        {
+        if (col.gameObject.CompareTag(m_SoccerSettings.purpleGoalTag)) //ball touched purple goal
             envController.GoalTouched(Team.Blue);
-        }
-        if (col.gameObject.CompareTag(blueGoalTag)) //ball touched blue goal
-        {
+        else if (col.gameObject.CompareTag(m_SoccerSettings.blueGoalTag)) //ball touched blue goal
             envController.GoalTouched(Team.Purple);
-        }
     }
 }
