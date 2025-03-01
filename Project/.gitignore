@@ -60,6 +60,7 @@
 
 # Large Checkpoints Files from results in Soccer Example
 Assets/ML-Agents/Examples/Soccer/results/**/SoccerTwos
+!Assets/ML-Agents/Examples/Soccer/results/SoccerFours0.4/SoccerTwos
 
 # Mac hidden files
 *.DS_Store
