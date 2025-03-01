@@ -44,10 +44,9 @@ Run IDs are used as the heading for the logs
   - **Team Rewards**:
     - **Goal (Team Score)**: +1 - Time Passed / MaxSteps
     - **Ball Touch**: None
-    - **Passing to Teammates (Agent Score)**: +5 / MaxSteps
-    - **Spacing Out (Agent Score)**: +1 / MaxSteps
   - **Agent Rewards**:
-    - None
+    - **Passing to Teammates**: +5 / MaxSteps
+    - **Spacing Out**: +1 / MaxSteps
 - **Notes**: Patterns of agents just sticking to a goal were noticed again, noticeably it's often two agents, with each being at one end of the goal. There are suspicions that they are farming the passing reward by just staying in that place even if they are doing nothing, so we might disable the passing reward for the next run and see how that goes.
 
 ### SoccerFours0.3
@@ -65,3 +64,23 @@ Run IDs are used as the heading for the logs
   - **Team Rewards**:
     - **Goal (Team Score)**: +1 - Time Passed / MaxSteps
   - **Notes**: There was no learning, agents just stood still.
+
+### SoccerFours0.4
+
+- **Title**: SoccerFours0.4
+- **Date**: 2025-02-28 - 2025-02-29
+- **Description**: First promising results, you just need a LOT of training time to get something, unfortunately terminal crashed mid training, so it was cut abruptly which affects any chances of resuming the training. Effort was put to salvage the best model possible.
+- **Steps**: 20M
+- **Training Time**: 10h 30m
+- **Initiated From**: scratch
+- **Peak ELO**: 1538
+- **Final ELO**: 1538
+- **Best Model**: SoccerTwos-19499943.onnx (should be, but since the training crashed in the middle this is the one with the best performance)
+- **Rewards**:
+  - **Team Rewards**:
+    - **Goal (Team Score)**: +1 - Time Passed / MaxSteps
+    - **Spacing Out**: +1 / MaxSteps
+  - **Agent Rewards**:
+    - **Ball Touch**: 0.2f * (+5f / MaxSteps)
+    - **Passing to Teammates**: +5 / MaxSteps
+  - **Notes**: There was a big jump in learning after 6 hours of training, it was 1250 ELO at 6 hours, jumped straight to 1400 at 8 hours and was consistently improving afterwards, up to 1520.
