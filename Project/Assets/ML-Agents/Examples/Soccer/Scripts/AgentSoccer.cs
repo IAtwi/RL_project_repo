@@ -79,8 +79,7 @@ public class AgentSoccer : Agent
         SPACING_REWARD = 1f / envController.MaxEnvironmentSteps;
         FORMATION_REWARD = 1f / envController.MaxEnvironmentSteps;
         BLOCKING_REWARD = 1f / envController.MaxEnvironmentSteps;
-        BALL_TOUCH_REWARD_DEFAULT_VALUE = 1f / envController.MaxEnvironmentSteps;
-
+        BALL_TOUCH_REWARD_DEFAULT_VALUE = 5f / envController.MaxEnvironmentSteps;
 
         if (m_BehaviorParameters.TeamId == (int)Team.Blue)
         {
@@ -138,14 +137,14 @@ public class AgentSoccer : Agent
             AddReward(PASSING_REWARD);  // Small reward for successful pass
         }
 
+        // Encourage spreading out
+        if (IsProperlySpaced())
+        {
+            ownGroup.AddGroupReward(SPACING_REWARD);
+        }
+
         if (CUSTOM_REWARDS)
         {
-            // Encourage spreading out
-            if (IsProperlySpaced())
-            {
-                ownGroup.AddGroupReward(SPACING_REWARD);
-            }
-
             // Reward for maintaining formation
             if (IsInFormation())
             {
