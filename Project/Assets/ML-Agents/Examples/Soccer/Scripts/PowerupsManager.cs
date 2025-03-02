@@ -2,42 +2,58 @@ using UnityEngine;
 
 public class PowerupsManager : MonoBehaviour
 {
-    //public GameObject spherePrefab;
-    //public float spawnInterval = 5f;
-    //private float timer = 0f;
+    public GameObject fieldGameObject;
+    public GameObject powerUpPrefab;
+    public float spawnInterval = 5f; // to be made private after fixing it
 
-    void Start()
+    private float _timer = 0f;
+    private BoxCollider _fieldBoxCollider;
+
+    #region Privates
+
+    private void Start()
     {
-        // Create a default golden sphere prefab if not assigned
-        //if (spherePrefab == null)
-        //{
-        //    spherePrefab = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        //    spherePrefab.transform.localScale = Vector3.one * 1.5f; // Slightly bigger sphere
-        //    Renderer renderer = spherePrefab.GetComponent<Renderer>();
-        //    renderer.material = new Material(Shader.Find("Standard"));
-        //    renderer.material.color = new Color(1f, 0.84f, 0f); // Gold color
-        //}
+        _fieldBoxCollider = fieldGameObject.GetComponent<BoxCollider>();
     }
 
-    void Update()
+    private void Update()
     {
-        //timer += Time.deltaTime;
+        _timer += Time.deltaTime;
 
-        //if (timer >= spawnInterval)
-        //{
-        //    SpawnSphere();
-        //    timer = 0f; // Reset the timer
-        //}
+        if (_timer >= spawnInterval)
+        {
+            SpawnSphere();
+            _timer = 0f; // Reset the timer
+        }
     }
 
-    void SpawnSphere()
+    private void SpawnSphere()
     {
-        // Generate a random position in the specified range
-        //float randomX = Random.Range(-6f, 6f);
-        //float randomZ = Random.Range(-7f, 7f);
-        //Vector3 spawnPosition = new Vector3(randomX, 0.5f, randomZ); // Spawning slightly above ground
+        Bounds bounds = _fieldBoxCollider.bounds;
 
-        //// Instantiate the sphere
-        //Instantiate(spherePrefab, spawnPosition, Quaternion.identity);
+        float fieldHalfWidth = bounds.size.z / 2;
+        float fieldQuarterLength = bounds.size.x / 4;
+
+        float randomX = Random.Range(-fieldQuarterLength, fieldQuarterLength);
+        float randomZ = Random.Range(-fieldHalfWidth * 0.7f, fieldQuarterLength * 0.7f);
+        Vector3 spawnPosition = new(bounds.center.x + randomX, powerUpPrefab.transform.localScale.y / 2, bounds.center.z + randomZ);
+
+        Instantiate(powerUpPrefab, spawnPosition, Quaternion.identity, transform);
     }
+
+    #endregion
+
+
+    #region Publics
+
+    public void Reset()
+    {
+        _timer = 0f;
+        // reset all in effect power ups and destroy existing on field power ups
+        foreach (Transform child in transform)
+            Destroy(child.gameObject);
+    }
+
+    #endregion
+
 }

@@ -6626,7 +6626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3495822948476769810
 Transform:
   m_ObjectHideFlags: 0
@@ -6654,6 +6654,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737038ae5db3f7f49b1c788bedb45dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fieldGameObject: {fileID: 257899725}
+  powerUpPrefab: {fileID: 2536117178904306865, guid: 2a60d0b775962d441abe0895d32c2d11,
+    type: 3}
+  spawnInterval: 5
 --- !u!1 &5976111193478290445
 GameObject:
   m_ObjectHideFlags: 0
