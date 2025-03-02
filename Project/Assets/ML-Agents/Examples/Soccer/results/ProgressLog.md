@@ -68,7 +68,7 @@ Run IDs are used as the heading for the logs
 ### SoccerFours0.4
 
 - **Title**: SoccerFours0.4
-- **Date**: 2025-02-28 - 2025-02-29
+- **Date**: 2025-02-28 - 2025-03-01
 - **Description**: First promising results, you just need a LOT of training time to get something, unfortunately terminal crashed mid training, so it was cut abruptly which affects any chances of resuming the training. Effort was put to salvage the best model possible.
 - **Steps**: 20M
 - **Training Time**: 10h 30m
@@ -84,3 +84,23 @@ Run IDs are used as the heading for the logs
     - **Ball Touch**: 0.2f * (+5f / MaxSteps)
     - **Passing to Teammates**: +5 / MaxSteps
   - **Notes**: There was a big jump in learning after 6 hours of training, it was 1250 ELO at 6 hours, jumped straight to 1400 at 8 hours and was consistently improving afterwards, up to 1520.
+
+### SoccerFours0.5
+
+- **Title**: SoccerFours0.5
+- **Date**: 2025-03-01 - 2025-03-02
+- **Description**: First model to get built on top of a past model. We pushed training time very high, to see how good it can get. ELO was going up and down, between 1300 and going down all the way to 1100, despite those fluctuations, the actual performance of the agents was very good.
+- **Steps**: 28.580M
+- **Training Time**: 20h 37m
+- **Initiated From**: SoccerFours0.4
+- **Peak ELO**: 1320
+- **Final ELO**: 1076
+- **Best Model**: SoccerFours0.5.onnx
+- **Rewards**:
+  - **Team Rewards**:
+    - **Goal (Team Score)**: +1 - Time Passed / MaxSteps
+    - **Spacing Out**: +1 / MaxSteps
+  - **Agent Rewards**:
+    - **Ball Touch**: 0.2f * (+5f / MaxSteps)
+    - **Passing to Teammates**: +5 / MaxSteps
+  - **Notes**: The agents learned on their own to maintain their positions. To use their environment to their advantage, to cooperate and pass the ball to each other, and are very dynamic to their situations.
