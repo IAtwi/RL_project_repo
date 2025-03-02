@@ -503,6 +503,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b9177339605f347959b54c1f92ec5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _wallsDefaultMaterial: {fileID: 2100000, guid: 66163cf35956a4be08e801b750c26f33,
+    type: 2}
   _wallMeshRenderers:
   - {fileID: 901290779}
   - {fileID: 2091312084}
@@ -6782,7 +6784,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -5.4048214, y: 0, z: -3.644527, w: 0}
+  m_margin: {x: -5.4048214, y: 0, z: -6.1284385, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -7471,7 +7473,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 3.63}
-  m_SizeDelta: {x: 20, y: 4}
+  m_SizeDelta: {x: 25, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2531524720021149478
 Canvas:
@@ -7948,7 +7950,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -3.6411605, y: 0, z: -5.4097433, w: 0}
+  m_margin: {x: -6.1454797, y: 0, z: -5.4097433, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

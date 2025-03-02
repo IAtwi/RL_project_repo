@@ -5,16 +5,18 @@ using UnityEngine;
 
 public class FieldController : MonoBehaviour
 {
+    [SerializeField] private Material _wallsDefaultMaterial;
     [SerializeField] private List<MeshRenderer> _wallMeshRenderers;
 
     private SoccerSettings m_SoccerSettings;
-
+    //private BoxCollider _fieldBoxCollider;
 
     #region Privates
 
     private void Start()
     {
         m_SoccerSettings = FindAnyObjectByType<SoccerSettings>();
+        //_fieldBoxCollider = GetComponent<BoxCollider>();
     }
 
     private void ResetTeam(List<PlayerInfo> teamPlayers, bool isXPositive)
@@ -63,6 +65,24 @@ public class FieldController : MonoBehaviour
         playerRigidbody.angularVelocity = Vector3.zero;
     }
 
+    // to be fixed an used
+    //private Vector3 GetRandomPositionOnHorizontalLine(int horizontalLineIndex, int xMultiplier)
+    //{
+    //    Bounds bounds = _fieldBoxCollider.bounds; // Get world-space bounds
+
+    //    float fieldHalfLength = bounds.extents.x; // Half the field length
+    //    float fieldHalfWidth = bounds.extents.z;  // Half the field width
+
+    //    float fixedX = xMultiplier * (bounds.center.x + (fieldHalfLength * 0.15f) * (horizontalLineIndex + 1));
+    //    float minZ = bounds.center.z + (fieldHalfWidth * 0.10f); // 10% of half-width
+    //    float maxZ = bounds.center.z + (fieldHalfWidth * 0.35f); // 35% of half-width
+
+    //    float randomZ = Random.Range(minZ, maxZ); // Random Z in the given range
+    //    float y = 0.5f; // Fixed Y value
+
+    //    return new Vector3(fixedX, y, randomZ);
+    //}
+
     #endregion
 
 
@@ -70,19 +90,15 @@ public class FieldController : MonoBehaviour
 
     public IEnumerator ColorizeFieldWalls(Team scoredTeam, float duration)
     {
-        Material[] initialMaterials = _wallMeshRenderers.Select(it => it.material).ToArray();
         Material targetedMaterial = scoredTeam == Team.Blue ? m_SoccerSettings.blueMaterial : m_SoccerSettings.purpleMaterial;
 
         foreach (MeshRenderer meshRenderer in _wallMeshRenderers)
-            meshRenderer.material = targetedMaterial;
+            meshRenderer.sharedMaterial = targetedMaterial;
 
         yield return new WaitForSeconds(duration);
 
-        for (int i = 0; i < _wallMeshRenderers.Count; i++)
-        {
-            MeshRenderer meshRenderer = _wallMeshRenderers[i];
-            meshRenderer.material = initialMaterials[i];
-        }
+        foreach (MeshRenderer meshRenderer in _wallMeshRenderers)
+            meshRenderer.sharedMaterial = _wallsDefaultMaterial;
     }
 
     public void ResetAgents(IEnumerable<PlayerInfo> agentsList)
