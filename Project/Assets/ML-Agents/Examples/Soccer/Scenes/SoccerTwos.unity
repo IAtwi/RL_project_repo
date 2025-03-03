@@ -434,7 +434,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!20 &450785969
 Camera:
   m_ObjectHideFlags: 0
@@ -494,13 +494,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 450785968}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.21118708, y: -0.6483591, z: 0.23285447, w: 0.6934041}
-  m_LocalPosition: {x: 75, y: 52, z: -8}
+  m_LocalRotation: {x: 0.25456125, y: -0.49941695, z: 0.1902638, w: 0.8059659}
+  m_LocalPosition: {x: 59.4, y: 44.6, z: -24.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 36.5, y: -85, z: 3.5}
+  m_LocalEulerAnglesHint: {x: 36.897, y: -62.315, z: 3.759}
 --- !u!1001 &478056696
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -615,6 +615,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54f3340298537426e96a6cc530e2d5d8, type: 3}
+--- !u!4 &774084575 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 257899726, guid: 54f3340298537426e96a6cc530e2d5d8,
+    type: 3}
+  m_PrefabInstance: {fileID: 774084574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &774084576 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4540201673231058, guid: 54f3340298537426e96a6cc530e2d5d8,
+    type: 3}
+  m_PrefabInstance: {fileID: 774084574}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &821440633
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,6 +820,7 @@ GameObject:
   - component: {fileID: 1009000884}
   - component: {fileID: 1009000887}
   - component: {fileID: 1009000888}
+  - component: {fileID: 1009000889}
   m_Layer: 0
   m_Name: PlayerCam
   m_TagString: MainCamera
@@ -889,6 +902,25 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1009000883}
   m_Enabled: 1
+--- !u!114 &1009000889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009000883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0dd16387ba4924468faf09676f535aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 774084576}
+  field: {fileID: 774084575}
+  ellipseWidth: 36
+  ellipseLength: 60
+  cameraHeight: 35
+  updateInterval: 3
+  moveDuration: 1
 --- !u!1001 &1018998147
 PrefabInstance:
   m_ObjectHideFlags: 0
