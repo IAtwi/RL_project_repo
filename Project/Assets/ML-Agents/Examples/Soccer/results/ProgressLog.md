@@ -104,3 +104,23 @@ Run IDs are used as the heading for the logs
     - **Ball Touch**: 0.2f * (+5f / MaxSteps)
     - **Passing to Teammates**: +5 / MaxSteps
   - **Notes**: The agents learned on their own to maintain their positions. To use their environment to their advantage, to cooperate and pass the ball to each other, and are very dynamic to their situations.
+
+  ### SoccerThrees0.1
+
+- **Title**: SoccerThrees0.1
+- **Date**: 2025-03-04 - 2025-03-05
+- **Description**: First run used to serve as comparison in performance to the other runs. The model is trained with 3 agents in the environment, with the same field size and no changes to vision.
+- **Steps**: 24.5M
+- **Training Time**: 18h 24m
+- **Initiated From**: scratch
+- **Peak ELO**: 1500
+- **Final ELO**: 1483
+- **Best Model**: SoccerThrees0.1.onnx
+- **Rewards**:
+  - **Team Rewards**:
+    - **Goal (Team Score)**: +1 - Time Passed / MaxSteps
+    - **Spacing Out**: +1 / MaxSteps
+  - **Agent Rewards**:
+    - **Ball Touch**: 0.2f * (+5f / MaxSteps)
+    - **Passing to Teammates**: +5 / MaxSteps
+  - **Notes**: Due to the smaller number of agents per team, it was more of a struggle to defend the goal, thus a higher number of scores was noticed.
