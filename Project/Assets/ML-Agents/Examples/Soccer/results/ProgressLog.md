@@ -124,3 +124,23 @@ Run IDs are used as the heading for the logs
     - **Ball Touch**: 0.2f * (+5f / MaxSteps)
     - **Passing to Teammates**: +5 / MaxSteps
   - **Notes**: Due to the smaller number of agents per team, it was more of a struggle to defend the goal, thus a higher number of scores was noticed.
+
+### SoccerFours0.6
+
+- **Title**: SoccerFours0.6
+- **Date**: 2025-03-06 - 2025-03-07
+- **Description**: This training session was done with increased number of rays, with 7 rays on each side for the front (was 6) and 4 backward rays on each side (was 2), with the angle spreading out increased to 60 (was 45). This model got the longest training time with almost 40 hours of training.
+- **Steps**: 48.98M
+- **Training Time**: 39h
+- **Initiated From**: scratch
+- **Peak ELO**: 1500
+- **Final ELO**: 1396
+- **Best Model**: SoccerFours0.6-42499524 + SoccerFours0.6.onnx
+- **Rewards**:
+  - **Team Rewards**:
+    - **Goal (Team Score)**: +1 - Time Passed / MaxSteps
+    - **Spacing Out**: +1 / MaxSteps
+  - **Agent Rewards**:
+    - **Ball Touch**: 0.2f * (+5f / MaxSteps)
+    - **Passing to Teammates**: +5 / MaxSteps
+  - **Notes**: The increased vision definitely helped in both the defensive and attacking abilities of the agents, as they can make better decisions with more frequent detections of relevent information needed around them.
