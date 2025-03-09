@@ -28,6 +28,7 @@ public class SoccerEnvController : MonoBehaviour
     public SimpleMultiAgentGroup m_PurpleAgentGroup;
 
     private FieldController _fieldController;
+    private PowerupsManager _powerupsManager;
     private int m_ResetTimer;
     private Rigidbody ballRb;
     private Vector3 m_BallStartingPos;
@@ -89,6 +90,8 @@ public class SoccerEnvController : MonoBehaviour
         m_ResetTimer = 0;
 
         _fieldController.ResetAgents(AgentsList);
+        if (_powerupsManager != null)
+            _powerupsManager.Reset();
         ResetBall();
     }
 
@@ -100,6 +103,7 @@ public class SoccerEnvController : MonoBehaviour
     private void Start()
     {
         _fieldController = GetComponentInChildren<FieldController>();
+        _powerupsManager = GetComponentInChildren<PowerupsManager>();
         // Initialize TeamManager
         m_BlueAgentGroup = new SimpleMultiAgentGroup();
         m_PurpleAgentGroup = new SimpleMultiAgentGroup();
